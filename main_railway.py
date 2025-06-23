@@ -103,6 +103,7 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
+    import os
     uvicorn.run(
         "main_railway:app",
         host="0.0.0.0",
