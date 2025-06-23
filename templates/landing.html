@@ -200,12 +200,12 @@
                     <p class="text-muted">
                         Sentiment analysis, demand forecasting, and predictive insights
                     </p>
-                    <a href="/docs#/reviews/get_sentiment_analytics_api_v1_reviews_analytics_get" class="btn-custom">
-                        <i class="fas fa-heart"></i> Sentiment API
-                    </a>
-                    <a href="/docs#/forecasting/generate_forecast_api_v1_forecasting_forecast_post" class="btn-custom">
-                        <i class="fas fa-crystal-ball"></i> Forecasting API
-                    </a>
+                    <button class="btn-custom" onclick="runSentimentAnalysis()">
+                        <i class="fas fa-heart"></i> Run Sentiment Analysis
+                    </button>
+                    <button class="btn-custom" onclick="runDemandForecast()">
+                        <i class="fas fa-crystal-ball"></i> Generate Forecast
+                    </button>
                 </div>
             </div>
             
@@ -271,7 +271,7 @@
                             </button>
                         </div>
                         <div class="col-md-3">
-                            <a href="https://github.com/anthropics/claude-code" class="btn-custom w-100" target="_blank">
+                            <a href="https://github.com/rprovine/tourism-analytics-platform" class="btn-custom w-100" target="_blank">
                                 <i class="fas fa-code"></i><br>
                                 View Source
                             </a>
@@ -362,6 +362,74 @@
             
             // Reload stats
             loadQuickStats();
+        }
+        
+        // Run sentiment analysis
+        async function runSentimentAnalysis() {
+            try {
+                const businessId = 'aloha_resort_waikiki';
+                const button = event.target;
+                const originalContent = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+                button.disabled = true;
+                
+                const response = await fetch(`/api/v1/reviews/analytics?business_id=${businessId}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    alert(`Sentiment Analysis Complete!\n\nOverall Sentiment: ${data.analytics.overall_sentiment}\nAverage Score: ${data.analytics.average_score}\nTotal Reviews: ${data.analytics.total_reviews}\n\nTop Keywords: ${data.analytics.common_keywords.slice(0, 5).join(', ')}`);
+                } else {
+                    alert('Error running sentiment analysis: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                const button = event.target;
+                button.innerHTML = '<i class="fas fa-heart"></i> Run Sentiment Analysis';
+                button.disabled = false;
+            }
+        }
+        
+        // Run demand forecast
+        async function runDemandForecast() {
+            try {
+                const businessId = 'aloha_resort_waikiki';
+                const button = event.target;
+                const originalContent = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Forecasting...';
+                button.disabled = true;
+                
+                const response = await fetch('/api/v1/forecasting/forecast', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        business_id: businessId,
+                        days_ahead: 7
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const predictions = data.predictions;
+                    const avgPrediction = Math.round(predictions.reduce((sum, p) => sum + p.predicted_visitors, 0) / predictions.length);
+                    const nextWeekDates = predictions.map(p => new Date(p.date).toLocaleDateString()).join(', ');
+                    
+                    alert(`7-Day Demand Forecast Complete!\n\nAverage Daily Visitors: ${avgPrediction}\nForecast Period: ${predictions[0].date} to ${predictions[predictions.length-1].date}\nModel Used: ${predictions[0].model_used}\n\nDetailed forecast saved to database.`);
+                } else {
+                    alert('Error generating forecast: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                const button = event.target;
+                button.innerHTML = '<i class="fas fa-crystal-ball"></i> Generate Forecast';
+                button.disabled = false;
+            }
         }
         
         // Load on page ready
