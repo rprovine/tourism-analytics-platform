@@ -81,7 +81,19 @@ class DemandForecaster:
                     self.label_encoders[col].fit(unique_values)
                 
                 df_processed[col] = df_processed[col].fillna('unknown')
-                df_processed[col] = self.label_encoders[col].transform(df_processed[col])
+                
+                # Handle unseen labels by mapping to 'unknown'
+                def safe_transform(values, encoder):
+                    result = []
+                    for val in values:
+                        try:
+                            result.append(encoder.transform([val])[0])
+                        except ValueError:
+                            # If value not seen during training, use 'unknown'
+                            result.append(encoder.transform(['unknown'])[0])
+                    return result
+                
+                df_processed[col] = safe_transform(df_processed[col], self.label_encoders[col])
         
         return df_processed
     
@@ -241,7 +253,7 @@ class DemandForecaster:
             start_date = datetime.now().date()
             future_dates = [start_date + timedelta(days=i) for i in range(1, days_ahead + 1)]
             
-            # Create input data for future dates
+            # Create input data for future dates with all required features
             future_data = []
             for future_date in future_dates:
                 data_point = {
@@ -250,9 +262,24 @@ class DemandForecaster:
                     'is_weekend': future_date.weekday() >= 5,
                     'is_holiday': self._is_holiday(future_date),
                     # Add default values or use base_data if provided
-                    'temperature': base_data.get('average_temperature', 20.0) if base_data else 20.0,
-                    'weather_condition': base_data.get('weather_condition', 'clear') if base_data else 'clear',
-                    'marketing_spend': base_data.get('marketing_spend', 0.0) if base_data else 0.0,
+                    'temperature': base_data.get('temperature', 78.0) if base_data else 78.0,
+                    'weather_condition': base_data.get('weather_condition', 'sunny') if base_data else 'sunny',
+                    'marketing_spend': base_data.get('marketing_spend', 1000.0) if base_data else 1000.0,
+                    # Add missing features with reasonable defaults
+                    'visitor_count': 100,  # Placeholder, will be used for lag features
+                    'revenue': 25000.0,
+                    'bookings': 80,
+                    'cancellations': 8,
+                    'occupancy_rate': 0.75,
+                    'average_stay_duration': 5.0,
+                    'source_market': 'domestic',
+                    'special_event': 'none',
+                    # Lag features will be 0 for future predictions
+                    'visitor_count_lag_1': 0,
+                    'visitor_count_lag_7': 0, 
+                    'visitor_count_lag_30': 0,
+                    'visitor_count_ma_7': 0,
+                    'visitor_count_ma_30': 0
                 }
                 future_data.append(data_point)
             

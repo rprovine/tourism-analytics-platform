@@ -209,7 +209,13 @@ class ChatService:
             
             # Total sessions
             total_sessions_result = await db.execute(
-                select(func.count(ChatSession.id)).select_from(session_query.subquery())
+                select(func.count(ChatSession.id)).where(
+                    and_(
+                        ChatSession.business_id == business_id,
+                        ChatSession.created_at >= start_date,
+                        ChatSession.created_at <= end_date
+                    )
+                )
             )
             total_sessions = total_sessions_result.scalar()
             
@@ -225,7 +231,9 @@ class ChatService:
             active_sessions = active_sessions_result.scalar()
             
             # Messages analytics
-            message_query = select(ChatMessage).join(ChatSession).where(
+            message_query = select(ChatMessage).join(
+                ChatSession, ChatMessage.session_id == ChatSession.session_id
+            ).where(
                 and_(
                     ChatSession.business_id == business_id,
                     ChatMessage.created_at >= start_date,
@@ -263,7 +271,9 @@ class ChatService:
             avg_response_time = sum(response_times) / len(response_times) if response_times else 0
             
             # Feedback analytics
-            feedback_query = select(ChatFeedback).join(ChatSession).where(
+            feedback_query = select(ChatFeedback).join(
+                ChatSession, ChatFeedback.session_id == ChatSession.session_id
+            ).where(
                 and_(
                     ChatSession.business_id == business_id,
                     ChatFeedback.created_at >= start_date,
