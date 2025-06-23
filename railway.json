@@ -1,11 +1,10 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS",
-    "buildCommand": "pip install --no-cache-dir -r requirements-railway.txt"
+    "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python railway-simple-start.py",
+    "startCommand": "bash start.sh",
     "healthcheckPath": "/health",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
