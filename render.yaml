@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: tourism-analytics-platform
+    env: python
+    buildCommand: pip install --no-cache-dir -r requirements-railway.txt
+    startCommand: python railway-simple-start.py
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: USE_DEMO_DATA
+        value: "true"
+      - key: SECRET_KEY
+        value: "kointyme-tourism-analytics-2024-secret"
+      - key: DEBUG
+        value: "false"
+      - key: PROJECT_NAME
+        value: "Tourism Analytics Platform - KoinTyme"
