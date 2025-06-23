@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=false
+      - PROJECT_NAME=Tourism Analytics Platform - KoinTyme
+      - API_V1_STR=/api/v1
+      - SENTIMENT_MODEL_PATH=models/sentiment
+      - FORECASTING_MODEL_PATH=models/forecasting
+      - UPLOAD_DIR=uploads
+      - MAX_FILE_SIZE=10485760
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
