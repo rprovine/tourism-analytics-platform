@@ -203,9 +203,9 @@
                     <button class="btn-custom" onclick="runSentimentAnalysis()">
                         <i class="fas fa-heart"></i> Run Sentiment Analysis
                     </button>
-                    <button class="btn-custom" onclick="runDemandForecast()">
-                        <i class="fas fa-crystal-ball"></i> Generate Forecast
-                    </button>
+                    <a href="/docs#/forecasting/generate_forecast_api_v1_forecasting_forecast_post" class="btn-custom">
+                        <i class="fas fa-crystal-ball"></i> Forecasting API Docs
+                    </a>
                 </div>
             </div>
             
@@ -366,26 +366,52 @@
         
         // Run sentiment analysis
         async function runSentimentAnalysis() {
+            const button = event.target;
+            
             try {
                 const businessId = 'aloha_resort_waikiki';
-                const button = event.target;
-                const originalContent = button.innerHTML;
                 
                 button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
                 button.disabled = true;
                 
-                const response = await fetch(`/api/v1/reviews/analytics?business_id=${businessId}`);
-                const data = await response.json();
+                console.log('Starting sentiment analysis...');
                 
-                if (data.status === 'success') {
-                    alert(`Sentiment Analysis Complete!\n\nOverall Sentiment: ${data.analytics.overall_sentiment}\nAverage Score: ${data.analytics.average_score}\nTotal Reviews: ${data.analytics.total_reviews}\n\nTop Keywords: ${data.analytics.common_keywords.slice(0, 5).join(', ')}`);
-                } else {
-                    alert('Error running sentiment analysis: ' + data.message);
+                const response = await fetch(`/api/v1/reviews/analytics?business_id=${businessId}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
+                
+                const data = await response.json();
+                console.log('Sentiment data:', data);
+                
+                if (data.status === 'success' && data.analytics) {
+                    const analytics = data.analytics;
+                    const keywords = analytics.common_keywords || [];
+                    const topKeywords = keywords.slice(0, 5).join(', ') || 'None available';
+                    
+                    const message = `Sentiment Analysis Complete!
+
+Overall Sentiment: ${analytics.overall_sentiment || 'Unknown'}
+Average Score: ${analytics.average_score || 'N/A'}
+Total Reviews: ${analytics.total_reviews || 0}
+
+Sentiment Distribution:
+• Positive: ${analytics.sentiment_distribution?.positive || 0}
+• Negative: ${analytics.sentiment_distribution?.negative || 0}  
+• Neutral: ${analytics.sentiment_distribution?.neutral || 0}
+
+Top Keywords: ${topKeywords}`;
+                    
+                    alert(message);
+                } else {
+                    alert('Error running sentiment analysis: ' + (data.message || 'Unknown error'));
+                }
+                
             } catch (error) {
-                alert('Error: ' + error.message);
+                console.error('Sentiment error:', error);
+                alert('Error running sentiment analysis: ' + error.message);
             } finally {
-                const button = event.target;
                 button.innerHTML = '<i class="fas fa-heart"></i> Run Sentiment Analysis';
                 button.disabled = false;
             }
@@ -393,13 +419,15 @@
         
         // Run demand forecast
         async function runDemandForecast() {
+            const button = event.target;
+            
             try {
                 const businessId = 'aloha_resort_waikiki';
-                const button = event.target;
-                const originalContent = button.innerHTML;
                 
                 button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Forecasting...';
                 button.disabled = true;
+                
+                console.log('Starting forecast request...');
                 
                 const response = await fetch('/api/v1/forecasting/forecast', {
                     method: 'POST',
@@ -412,21 +440,40 @@
                     })
                 });
                 
-                const data = await response.json();
+                console.log('Response status:', response.status);
                 
-                if (data.status === 'success') {
-                    const predictions = data.predictions;
-                    const avgPrediction = Math.round(predictions.reduce((sum, p) => sum + p.predicted_visitors, 0) / predictions.length);
-                    const nextWeekDates = predictions.map(p => new Date(p.date).toLocaleDateString()).join(', ');
-                    
-                    alert(`7-Day Demand Forecast Complete!\n\nAverage Daily Visitors: ${avgPrediction}\nForecast Period: ${predictions[0].date} to ${predictions[predictions.length-1].date}\nModel Used: ${predictions[0].model_used}\n\nDetailed forecast saved to database.`);
-                } else {
-                    alert('Error generating forecast: ' + data.message);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (data.status === 'success' && data.predictions && data.predictions.length > 0) {
+                    const predictions = data.predictions;
+                    const totalVisitors = predictions.reduce((sum, p) => sum + (p.predicted_visitors || 0), 0);
+                    const avgPrediction = Math.round(totalVisitors / predictions.length);
+                    
+                    const message = `7-Day Demand Forecast Complete!
+
+Average Daily Visitors: ${avgPrediction}
+Forecast Period: ${predictions[0].date} to ${predictions[predictions.length-1].date}
+Model Used: ${predictions[0].model_used || 'random_forest'}
+
+Total 7-day forecast: ${Math.round(totalVisitors)} visitors
+Model Performance: R² = ${(data.model_performance?.r2 || 0).toFixed(3)}
+
+Detailed forecast saved to database.`;
+                    
+                    alert(message);
+                } else {
+                    alert('Error generating forecast: ' + (data.message || 'Unknown error'));
+                }
+                
             } catch (error) {
-                alert('Error: ' + error.message);
+                console.error('Forecast error:', error);
+                alert('Error generating forecast: ' + error.message);
             } finally {
-                const button = event.target;
                 button.innerHTML = '<i class="fas fa-crystal-ball"></i> Generate Forecast';
                 button.disabled = false;
             }
