@@ -2,6 +2,18 @@
 
 > **Engineered by KoinTyme** - Enterprise deployment options for production hosting
 
+## 🎯 **Single-Server Deployment (Recommended)**
+
+The platform can run as a **single FastAPI service** with all analytics integrated. The Streamlit dashboard is optional for enterprise users.
+
+**What you get with single-server deployment:**
+- ✅ Complete FastAPI backend with all APIs
+- ✅ Landing page with integrated analytics
+- ✅ Sentiment analysis, forecasting, chat features
+- ✅ Real-time statistics dashboard
+- ✅ API documentation interface
+- ✅ Cost-effective single container deployment
+
 ## Quick Deploy Options
 
 ### 🔥 Option 1: DigitalOcean App Platform (Recommended)

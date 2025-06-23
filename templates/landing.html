@@ -190,7 +190,7 @@
                     <p class="text-muted">
                         Real-time business intelligence with interactive charts and KPIs
                     </p>
-                    <a href="http://localhost:8501" class="btn-custom" target="_blank">
+                    <a href="#" class="btn-custom" onclick="openDashboard()">
                         <i class="fas fa-chart-line"></i> Launch Dashboard
                     </a>
                 </div>
@@ -474,6 +474,20 @@ Detailed forecast saved to database.`;
             } finally {
                 button.innerHTML = '<i class="fas fa-crystal-ball"></i> Generate Forecast';
                 button.disabled = false;
+            }
+        }
+        
+        // Open dashboard - handles both local and production
+        function openDashboard() {
+            // Check if we're in production (no localhost)
+            const isProduction = !window.location.hostname.includes('localhost');
+            
+            if (isProduction) {
+                // In production, show alert about analytics being integrated
+                alert('📊 Dashboard Analytics Integrated!\n\nAll analytics features are available through:\n\n• Sentiment Analysis button above\n• API endpoints (/docs)\n• Real-time stats on this page\n\nFor a full dashboard experience, consider the enterprise Streamlit option.\n\n🚀 Powered by KoinTyme');
+            } else {
+                // In development, open Streamlit
+                window.open('http://localhost:8501', '_blank');
             }
         }
         
