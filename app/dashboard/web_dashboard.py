@@ -377,7 +377,7 @@ def main():
     # Auto-refresh
     if st.sidebar.button("🔄 Refresh Data"):
         st.cache_data.clear()
-        st.experimental_rerun()
+        st.rerun()
     
     # Main dashboard content
     if dashboard_type == "Overview":
