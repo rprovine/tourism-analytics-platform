@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "main.py"
+    }
+  ],
+  "env": {
+    "USE_DEMO_DATA": "true",
+    "SECRET_KEY": "kointyme-tourism-analytics-2024-secret",
+    "DEBUG": "false",
+    "PROJECT_NAME": "Tourism Analytics Platform - KoinTyme"
+  }
+}
