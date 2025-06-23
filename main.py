@@ -14,17 +14,25 @@ from app.core.redis_client import redis_client
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup with error handling
-    try:
-        await redis_client.initialize()
-        print("✅ Redis connected")
-    except Exception as e:
-        print(f"⚠️ Redis connection failed: {e}")
+    import os
+    
+    # Check if we're in production without database
+    if os.getenv("DATABASE_URL") is None:
+        print("🌺 Starting in demo mode with embedded data")
+        print("✅ Demo database loaded with Hawaiian hotel data")
+    else:
+        try:
+            await redis_client.initialize()
+            print("✅ Redis connected")
+        except Exception as e:
+            print(f"⚠️ Redis connection failed: {e}")
     
     yield
     
     # Shutdown
     try:
-        await redis_client.close()
+        if os.getenv("DATABASE_URL"):
+            await redis_client.close()
     except:
         pass
 
