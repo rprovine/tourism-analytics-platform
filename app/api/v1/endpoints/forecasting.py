@@ -143,6 +143,25 @@ async def generate_forecast(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/forecast")
+async def generate_forecast_get(
+    business_id: str = Query(..., description="Business ID"),
+    days_ahead: int = Query(7, description="Number of days to forecast"),
+    db: AsyncSession = Depends(get_db)
+):
+    """Generate demand forecast via GET (for easy testing)"""
+    try:
+        result = await ForecastingService.generate_forecast(
+            db=db,
+            business_id=business_id,
+            days_ahead=days_ahead,
+            base_conditions=None
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/forecast/history")
 async def get_forecast_history(
     business_id: str = Query(..., description="Business ID"),

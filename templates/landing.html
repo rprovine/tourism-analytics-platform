@@ -203,9 +203,9 @@
                     <button class="btn-custom" onclick="runSentimentAnalysis()">
                         <i class="fas fa-heart"></i> Run Sentiment Analysis
                     </button>
-                    <a href="/docs#/forecasting/generate_forecast_api_v1_forecasting_forecast_post" class="btn-custom">
-                        <i class="fas fa-crystal-ball"></i> Forecasting API Docs
-                    </a>
+                    <button class="btn-custom" onclick="runDemandForecastSimple()">
+                        <i class="fas fa-crystal-ball"></i> Generate Forecast
+                    </button>
                 </div>
             </div>
             
@@ -417,28 +417,20 @@ Top Keywords: ${topKeywords}`;
             }
         }
         
-        // Run demand forecast
-        async function runDemandForecast() {
+        // Run demand forecast (simple GET version)
+        async function runDemandForecastSimple() {
             const button = event.target;
             
             try {
                 const businessId = 'aloha_resort_waikiki';
+                const daysAhead = 7;
                 
                 button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Forecasting...';
                 button.disabled = true;
                 
                 console.log('Starting forecast request...');
                 
-                const response = await fetch('/api/v1/forecasting/forecast', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        business_id: businessId,
-                        days_ahead: 7
-                    })
-                });
+                const response = await fetch(`/api/v1/forecasting/forecast?business_id=${businessId}&days_ahead=${daysAhead}`);
                 
                 console.log('Response status:', response.status);
                 
