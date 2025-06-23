@@ -1,0 +1,36 @@
+# Ignore development files for production builds
+docker-compose.dev.yml
+docker-compose.prod.yml
+docker-compose.override.yml
+.env
+.env.local
+.env.example
+.git
+.gitignore
+README.md
+DEPLOYMENT.md
+*.md
+.do/
+deploy.sh
+start-production.sh
+Dockerfile.prod
+nginx-single.conf
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache
+.coverage
+
+# IDEs
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
