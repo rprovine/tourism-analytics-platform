@@ -25,20 +25,26 @@ This is **1 physical server** running **2 services** - it's normal architecture.
 - **Cost**: **$15/month each** = **$30/month total**
 - **Resources**: 1GB RAM, 10GB storage each
 
-### **📊 Total Monthly Cost: ~$35/month**
+### **📊 Total Monthly Cost: $48/month** (2 x $24 servers)
 
 ## 🎯 **Cost Optimization Options**
 
-### **Option 1: Single Database (Cheaper)**
+### **Option 1: No Database (Cheapest)**
+Deploy without databases first:
+- **Web only**: $5/month
+- **Use**: `.do/deploy-simple.yaml`
+- **Total**: **$5/month**
+
+### **Option 2: Single Database** 
 Remove Redis, use PostgreSQL only:
 - **Web**: $5/month
-- **PostgreSQL**: $15/month
-- **Total**: **$20/month**
+- **PostgreSQL**: $24/month  
+- **Total**: **$29/month**
 
-### **Option 2: External Database (Cheapest)**
-Use external free database services:
-- **Web**: $5/month  
-- **Database**: Free (PlanetScale, Neon, etc.)
+### **Option 3: External Database**
+Use free external database:
+- **Web**: $5/month
+- **Database**: Free (Supabase, PlanetScale)
 - **Total**: **$5/month**
 
 ### **Option 3: Railway Alternative**
