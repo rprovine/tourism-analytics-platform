@@ -13,11 +13,20 @@ from app.core.redis_client import redis_client
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
-    await redis_client.initialize()
+    # Startup with error handling
+    try:
+        await redis_client.initialize()
+        print("✅ Redis connected")
+    except Exception as e:
+        print(f"⚠️ Redis connection failed: {e}")
+    
     yield
+    
     # Shutdown
-    await redis_client.close()
+    try:
+        await redis_client.close()
+    except:
+        pass
 
 
 app = FastAPI(
