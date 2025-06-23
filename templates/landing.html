@@ -483,11 +483,146 @@ Detailed forecast saved to database.`;
             const isProduction = !window.location.hostname.includes('localhost');
             
             if (isProduction) {
-                // In production, show alert about analytics being integrated
-                alert('📊 Dashboard Analytics Integrated!\n\nAll analytics features are available through:\n\n• Sentiment Analysis button above\n• API endpoints (/docs)\n• Real-time stats on this page\n\nFor a full dashboard experience, consider the enterprise Streamlit option.\n\n🚀 Powered by KoinTyme');
+                // In production, show demo dashboard with embedded data
+                showDashboardModal();
             } else {
                 // In development, open Streamlit
                 window.open('http://localhost:8501', '_blank');
+            }
+        }
+        
+        function showDashboardModal() {
+            // Create a modal with embedded charts
+            const modal = document.createElement('div');
+            modal.innerHTML = `
+                <div class="modal fade" id="dashboardModal" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5);">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">📊 Tourism Analytics Dashboard</h5>
+                                <button type="button" class="btn-close" onclick="closeDashboardModal()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">🏨 Hotel Performance</div>
+                                            <div class="card-body">
+                                                <canvas id="hotelChart" width="400" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">💭 Sentiment Analysis</div>
+                                            <div class="card-body">
+                                                <canvas id="sentimentChart" width="400" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">📈 Revenue Forecast</div>
+                                            <div class="card-body">
+                                                <canvas id="forecastChart" width="800" height="300"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="alert alert-info mt-3">
+                                    <strong>🚀 Powered by KoinTyme</strong><br>
+                                    This is a demo dashboard with Hawaiian hotel data. 
+                                    For the full Streamlit experience, contact us for enterprise deployment.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // Create simple charts
+            setTimeout(() => {
+                createDemoCharts();
+            }, 100);
+        }
+        
+        function closeDashboardModal() {
+            const modal = document.getElementById('dashboardModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+        function createDemoCharts() {
+            // Hotel performance chart
+            const hotelCanvas = document.getElementById('hotelChart');
+            if (hotelCanvas) {
+                const ctx = hotelCanvas.getContext('2d');
+                ctx.fillStyle = '#667eea';
+                ctx.fillRect(50, 50, 100, 100);
+                ctx.fillStyle = '#764ba2';
+                ctx.fillRect(200, 30, 100, 120);
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillRect(350, 70, 100, 80);
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.fillText('Occupancy Rate by Hotel', 10, 20);
+                ctx.fillText('Aloha Beach', 50, 170);
+                ctx.fillText('Maui Paradise', 200, 170);
+                ctx.fillText('Big Island', 350, 170);
+            }
+            
+            // Sentiment chart
+            const sentimentCanvas = document.getElementById('sentimentChart');
+            if (sentimentCanvas) {
+                const ctx = sentimentCanvas.getContext('2d');
+                ctx.beginPath();
+                ctx.arc(200, 100, 80, 0, Math.PI * 1.4);
+                ctx.fillStyle = '#4CAF50';
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(200, 100, 80, Math.PI * 1.4, Math.PI * 1.8);
+                ctx.fillStyle = '#FFC107';
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(200, 100, 80, Math.PI * 1.8, Math.PI * 2);
+                ctx.fillStyle = '#F44336';
+                ctx.fill();
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.fillText('Sentiment Distribution', 10, 20);
+                ctx.fillText('Positive: 70%', 10, 40);
+                ctx.fillText('Neutral: 25%', 10, 55);
+                ctx.fillText('Negative: 5%', 10, 70);
+            }
+            
+            // Forecast chart
+            const forecastCanvas = document.getElementById('forecastChart');
+            if (forecastCanvas) {
+                const ctx = forecastCanvas.getContext('2d');
+                ctx.strokeStyle = '#667eea';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(50, 200);
+                
+                for (let i = 0; i < 30; i++) {
+                    const x = 50 + (i * 25);
+                    const y = 200 - (Math.sin(i * 0.3) * 50 + Math.random() * 30);
+                    ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.fillText('30-Day Revenue Forecast', 10, 20);
+                ctx.fillText('Predicted Revenue Growth: +15%', 10, 40);
             }
         }
         
