@@ -417,6 +417,7 @@ def main():
     # Footer
     st.sidebar.markdown("---")
     st.sidebar.markdown("🌺 **Tourism Analytics Platform**")
+    st.sidebar.markdown("🚀 **Engineered by [KoinTyme](https://kointyme.com)**")
     st.sidebar.markdown("Powered by FastAPI, Streamlit & AI")
     
     # Health check in sidebar

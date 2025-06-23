@@ -33,6 +33,11 @@ async def landing_page():
                 <div class="jumbotron bg-primary text-white p-5 rounded">
                     <h1 class="display-4">🌺 Tourism Analytics Platform</h1>
                     <p class="lead">Welcome to your comprehensive Hawaiian hotel analytics dashboard</p>
+                    <div class="mb-3">
+                        <span class="badge bg-light text-dark fs-6 py-2 px-3">
+                            🚀 Engineered by KoinTyme Innovation
+                        </span>
+                    </div>
                     <hr class="my-4">
                     <div class="row">
                         <div class="col-md-3">
