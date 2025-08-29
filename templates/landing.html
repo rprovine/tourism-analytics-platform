@@ -190,9 +190,9 @@
                     <p class="text-muted">
                         Real-time business intelligence with interactive charts and KPIs
                     </p>
-                    <a href="#" class="btn-custom" onclick="openDashboard()">
+                    <button class="btn-custom" onclick="openDashboard(); return false;">
                         <i class="fas fa-chart-line"></i> Launch Dashboard
-                    </a>
+                    </button>
                 </div>
             </div>
             
@@ -300,6 +300,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Check system status on load
         async function checkSystemStatus() {
@@ -479,24 +480,20 @@ Detailed forecast saved to database.`;
         
         // Open dashboard - handles both local and production
         function openDashboard() {
-            // Check if we're in production (no localhost)
-            const isProduction = !window.location.hostname.includes('localhost');
-            
-            if (isProduction) {
-                // In production, show demo dashboard with embedded data
-                showDashboardModal();
-            } else {
-                // In development, open Streamlit
-                window.open('http://localhost:8501', '_blank');
-            }
+            if (event) event.preventDefault();
+            console.log('Opening dashboard...');
+            // Always show the modal dashboard (works everywhere)
+            showDashboardModal();
+            return false;
         }
         
         function showDashboardModal() {
+            console.log('Opening dashboard modal...');
             // Create a modal with embedded charts
             const modal = document.createElement('div');
             modal.innerHTML = `
-                <div class="modal fade" id="dashboardModal" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5);">
-                    <div class="modal-dialog modal-xl">
+                <div class="modal fade show" id="dashboardModal" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;">
+                    <div class="modal-dialog modal-xl" style="margin-top: 50px;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">📊 Tourism Analytics Dashboard</h5>
@@ -543,6 +540,10 @@ Detailed forecast saved to database.`;
             `;
             document.body.appendChild(modal);
             
+            // Show the modal properly
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
             // Create simple charts
             setTimeout(() => {
                 createDemoCharts();
@@ -552,7 +553,8 @@ Detailed forecast saved to database.`;
         function closeDashboardModal() {
             const modal = document.getElementById('dashboardModal');
             if (modal) {
-                modal.remove();
+                modal.parentElement.remove();
+                document.body.style.overflow = 'auto';
             }
         }
         
