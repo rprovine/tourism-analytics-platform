@@ -189,3 +189,5 @@ nginx-single.conf
 
 # Deployment files that confuse DigitalOcean
 .do/
+.vercel
+.vercel

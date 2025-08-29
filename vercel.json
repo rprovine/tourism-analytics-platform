@@ -1,21 +1,11 @@
 {
-  "version": 2,
-  "builds": [
+  "buildCommand": "echo 'No build needed'",
+  "outputDirectory": "public", 
+  "framework": null,
+  "rewrites": [
     {
-      "src": "main.py",
-      "use": "@vercel/python"
+      "source": "/(.*)",
+      "destination": "https://tourism-analytics-platform.streamlit.app/$1"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "main.py"
-    }
-  ],
-  "env": {
-    "USE_DEMO_DATA": "true",
-    "SECRET_KEY": "kointyme-tourism-analytics-2024-secret",
-    "DEBUG": "false",
-    "PROJECT_NAME": "Tourism Analytics Platform - KoinTyme"
-  }
+  ]
 }

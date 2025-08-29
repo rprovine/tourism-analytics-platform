@@ -1,0 +1,12 @@
+{
+  "name": "tourism-analytics-proxy",
+  "version": "1.0.0",
+  "description": "Vercel proxy for Tourism Analytics Platform",
+  "scripts": {
+    "build": "echo 'No build needed'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": ["tourism", "analytics", "proxy"],
+  "author": "Lenilani",
+  "license": "MIT"
+}
