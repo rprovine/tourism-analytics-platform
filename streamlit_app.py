@@ -63,7 +63,7 @@ st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Powe
 
 # Sidebar
 with st.sidebar:
-    st.image("https://via.placeholder.com/300x100/667eea/ffffff?text=LeniLani+Consulting", use_column_width=True)
+    st.image("https://via.placeholder.com/300x100/667eea/ffffff?text=LeniLani+Consulting", use_container_width=True)
     st.markdown("---")
     
     # Date range selector
