@@ -9,11 +9,11 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Tourism Analytics Platform"
     VERSION: str = "1.0.0"
     HOST: str = "0.0.0.0"
-    PORT: int = 8000
+    PORT: int = int(os.getenv("PORT", 8000))
     DEBUG: bool = True
     
     # Database
-    DATABASE_URL: str = "postgresql+asyncpg://user:password@localhost:5432/tourism_analytics"
+    DATABASE_URL: Optional[str] = os.getenv("DATABASE_URL", None)
     
     # Redis
     REDIS_URL: str = "redis://localhost:6379/0"
