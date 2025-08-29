@@ -63,7 +63,16 @@ st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Powe
 
 # Sidebar
 with st.sidebar:
-    st.image("https://via.placeholder.com/300x100/667eea/ffffff?text=LeniLani+Consulting", use_container_width=True)
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                padding: 20px; 
+                border-radius: 10px; 
+                text-align: center; 
+                margin-bottom: 20px;">
+        <h2 style="color: white; margin: 0; font-size: 1.5rem;">🌺 LeniLani Consulting</h2>
+        <p style="color: rgba(255,255,255,0.9); margin: 5px 0 0 0; font-size: 0.9rem;">Tourism Analytics Platform</p>
+    </div>
+    """, unsafe_allow_html=True)
     st.markdown("---")
     
     # Date range selector
