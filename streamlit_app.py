@@ -594,6 +594,43 @@ elif analysis_type == "Lead Management":
                            color='Count', color_continuous_scale='RdYlGn')
         st.plotly_chart(fig_quality, use_container_width=True)
     
+    # Lead details view
+    st.markdown("### 📋 Recent Prospects")
+    
+    # Sample prospect data
+    prospects = pd.DataFrame({
+        'Name': ['John Smith', 'Sarah Johnson', 'Mike Chen', 'Lisa Park', 'Tom Wilson'],
+        'Email': ['john@email.com', 'sarah@email.com', 'mike@email.com', 'lisa@email.com', 'tom@email.com'],
+        'Source': ['Website', 'Social Media', 'Referral', 'Email', 'Direct'],
+        'Score': [95, 87, 72, 68, 45],
+        'Status': ['Hot', 'Hot', 'Warm', 'Warm', 'Cold'],
+        'Last Contact': ['2 hours ago', '5 hours ago', '1 day ago', '2 days ago', '3 days ago']
+    })
+    
+    # Display prospects in a table with error handling
+    try:
+        st.dataframe(
+            prospects,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Score": st.column_config.ProgressColumn(
+                    "Lead Score",
+                    help="Lead quality score out of 100",
+                    format="%d",
+                    min_value=0,
+                    max_value=100,
+                ),
+                "Status": st.column_config.SelectboxColumn(
+                    "Status",
+                    options=["Hot", "Warm", "Cold"],
+                )
+            }
+        )
+    except Exception as e:
+        st.error(f"Error loading prospect details: {str(e)}")
+        st.info("Using sample data for demonstration")
+    
     # Lead capture form
     st.markdown("### ➕ Add New Lead")
     with st.form("lead_form"):
@@ -608,7 +645,10 @@ elif analysis_type == "Lead Management":
             notes = st.text_area("Notes")
         
         if st.form_submit_button("Add Lead"):
-            st.success(f"✅ Lead '{name}' added successfully!")
+            if name and email:
+                st.success(f"✅ Lead '{name}' added successfully!")
+            else:
+                st.error("Please fill in at least Name and Email fields")
 
 elif analysis_type == "Chatbot Simulator":
     st.markdown("## 🤖 Interactive Chatbot Simulator")
