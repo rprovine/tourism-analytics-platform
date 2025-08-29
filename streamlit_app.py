@@ -95,7 +95,9 @@ with st.sidebar:
     st.markdown("### 📊 Analysis Type")
     analysis_type = st.radio(
         "Choose analysis focus",
-        ["Overview", "Sentiment Analysis", "Revenue Analytics", "Demand Forecasting", "Competitive Analysis"]
+        ["Overview", "Chat Analytics", "Sentiment Analysis", "Lead Management", 
+         "Revenue Analytics", "Demand Forecasting", "Chatbot Simulator", 
+         "API Integration", "Competitive Analysis"]
     )
     
     st.markdown("---")
@@ -472,6 +474,294 @@ elif analysis_type == "Demand Forecasting":
         fig_lead = px.pie(lead_time_data, values='Bookings', names='Days in Advance',
                          title="Booking Distribution by Lead Time")
         st.plotly_chart(fig_lead, use_container_width=True)
+
+elif analysis_type == "Chat Analytics":
+    st.markdown("## 💬 Chat Analytics Dashboard")
+    
+    # Chat metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Total Conversations", "2,847", "+312")
+    
+    with col2:
+        st.metric("Avg Response Time", "1.2s", "-0.3s")
+    
+    with col3:
+        st.metric("Resolution Rate", "94%", "+2%")
+    
+    with col4:
+        st.metric("Satisfaction Score", "4.8/5", "+0.2")
+    
+    # Chat volume over time
+    st.markdown("### 📊 Chat Volume Trends")
+    dates = pd.date_range(start=date_range[0], end=date_range[1], freq='D')
+    chat_volume = pd.DataFrame({
+        'Date': dates,
+        'Chats': np.random.randint(50, 150, len(dates)),
+        'Unique Users': np.random.randint(30, 100, len(dates))
+    })
+    
+    fig_chat = px.line(chat_volume, x='Date', y=['Chats', 'Unique Users'],
+                       title="Daily Chat Activity")
+    st.plotly_chart(fig_chat, use_container_width=True)
+    
+    # Intent analysis
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 🎯 Top Chat Intents")
+        intents = pd.DataFrame({
+            'Intent': ['Booking Inquiry', 'Room Service', 'Check-in/out', 'Amenities', 'Complaints'],
+            'Count': [450, 380, 320, 280, 150]
+        })
+        fig_intents = px.pie(intents, values='Count', names='Intent',
+                            title="Intent Distribution")
+        st.plotly_chart(fig_intents, use_container_width=True)
+    
+    with col2:
+        st.markdown("### 🌍 Language Distribution")
+        languages = pd.DataFrame({
+            'Language': ['English', 'Japanese', 'Chinese', 'Korean', 'Spanish'],
+            'Percentage': [45, 25, 15, 10, 5]
+        })
+        fig_lang = px.bar(languages, x='Language', y='Percentage',
+                         title="Chat Languages")
+        st.plotly_chart(fig_lang, use_container_width=True)
+    
+    # Chat simulator
+    st.markdown("### 🤖 Test Chatbot")
+    user_message = st.text_input("Type a message to test the chatbot:")
+    if user_message:
+        with st.chat_message("user"):
+            st.write(user_message)
+        with st.chat_message("assistant"):
+            responses = [
+                "Thank you for your message! I'd be happy to help you with that.",
+                "I understand your inquiry. Let me find that information for you.",
+                "Great question! Here's what I can tell you about our services..."
+            ]
+            st.write(random.choice(responses))
+
+elif analysis_type == "Lead Management":
+    st.markdown("## 👥 Lead Management System")
+    
+    # Lead metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Total Leads", "1,234", "+89")
+    
+    with col2:
+        st.metric("Conversion Rate", "23.5%", "+3.2%")
+    
+    with col3:
+        st.metric("Avg Lead Value", "$2,450", "+$120")
+    
+    with col4:
+        st.metric("Pipeline Value", "$3.2M", "+$450K")
+    
+    # Lead funnel
+    st.markdown("### 🔄 Lead Funnel")
+    funnel_data = pd.DataFrame({
+        'Stage': ['Awareness', 'Interest', 'Consideration', 'Intent', 'Purchase'],
+        'Count': [5000, 2500, 1200, 600, 290]
+    })
+    
+    fig_funnel = px.funnel(funnel_data, x='Count', y='Stage',
+                          title="Lead Conversion Funnel")
+    st.plotly_chart(fig_funnel, use_container_width=True)
+    
+    # Lead sources
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 📍 Lead Sources")
+        sources = pd.DataFrame({
+            'Source': ['Website', 'Social Media', 'Email', 'Referral', 'Direct'],
+            'Leads': [400, 350, 250, 180, 54]
+        })
+        fig_sources = px.pie(sources, values='Leads', names='Source')
+        st.plotly_chart(fig_sources, use_container_width=True)
+    
+    with col2:
+        st.markdown("### 📈 Lead Quality Score")
+        quality_data = pd.DataFrame({
+            'Score Range': ['90-100', '70-89', '50-69', '30-49', '0-29'],
+            'Count': [150, 400, 350, 250, 84]
+        })
+        fig_quality = px.bar(quality_data, x='Score Range', y='Count',
+                           color='Count', color_continuous_scale='RdYlGn')
+        st.plotly_chart(fig_quality, use_container_width=True)
+    
+    # Lead capture form
+    st.markdown("### ➕ Add New Lead")
+    with st.form("lead_form"):
+        col1, col2 = st.columns(2)
+        with col1:
+            name = st.text_input("Name")
+            email = st.text_input("Email")
+            phone = st.text_input("Phone")
+        with col2:
+            source = st.selectbox("Source", ['Website', 'Social Media', 'Email', 'Referral'])
+            interest = st.selectbox("Interest Level", ['Hot', 'Warm', 'Cold'])
+            notes = st.text_area("Notes")
+        
+        if st.form_submit_button("Add Lead"):
+            st.success(f"✅ Lead '{name}' added successfully!")
+
+elif analysis_type == "Chatbot Simulator":
+    st.markdown("## 🤖 Interactive Chatbot Simulator")
+    
+    # Chatbot settings
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        language = st.selectbox("Language", ['English', 'Japanese', 'Chinese', 'Spanish'])
+    
+    with col2:
+        personality = st.selectbox("Bot Personality", ['Professional', 'Friendly', 'Casual'])
+    
+    with col3:
+        response_speed = st.slider("Response Speed (ms)", 100, 2000, 500)
+    
+    st.markdown("---")
+    
+    # Chat interface
+    st.markdown("### 💬 Chat Interface")
+    
+    # Initialize chat history
+    if 'messages' not in st.session_state:
+        st.session_state.messages = [
+            {"role": "assistant", "content": "🌺 Aloha! Welcome to our hotel. How can I assist you today?"}
+        ]
+    
+    # Display chat messages
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+    
+    # Chat input
+    if prompt := st.chat_input("Type your message here..."):
+        # Add user message
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+        
+        # Generate bot response
+        responses = {
+            "booking": "I'd be happy to help you with a booking! We have rooms available starting at $450/night. What dates are you interested in?",
+            "amenities": "Our resort offers: 🏊 3 pools, 🏖️ Private beach access, 🍽️ 5 restaurants, 💆 Full-service spa, 🏋️ Fitness center, and 🎾 Tennis courts.",
+            "check": "Check-in is at 3:00 PM and check-out is at 11:00 AM. Early check-in and late check-out may be available upon request.",
+            "restaurant": "We have 5 dining options: 🍣 Sakura (Japanese), 🥩 The Grill (Steakhouse), 🌮 Sunset Cantina (Mexican), 🍕 Oceanview Bistro (Italian), and ☕ Aloha Café (Casual).",
+            "default": "Thank you for your inquiry! I'm here to help make your stay memorable. Could you please provide more details about what you'd like to know?"
+        }
+        
+        # Simple intent detection
+        prompt_lower = prompt.lower()
+        if any(word in prompt_lower for word in ['book', 'reservation', 'available']):
+            response = responses['booking']
+        elif any(word in prompt_lower for word in ['amenity', 'facility', 'pool', 'gym']):
+            response = responses['amenities']
+        elif any(word in prompt_lower for word in ['check-in', 'checkout', 'time']):
+            response = responses['check']
+        elif any(word in prompt_lower for word in ['restaurant', 'food', 'dining', 'eat']):
+            response = responses['restaurant']
+        else:
+            response = responses['default']
+        
+        # Add bot response
+        st.session_state.messages.append({"role": "assistant", "content": response})
+        with st.chat_message("assistant"):
+            st.markdown(response)
+    
+    # Chat analytics
+    st.markdown("### 📊 Current Session Analytics")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Messages", len(st.session_state.messages))
+    
+    with col2:
+        user_messages = len([m for m in st.session_state.messages if m['role'] == 'user'])
+        st.metric("User Messages", user_messages)
+    
+    with col3:
+        st.metric("Avg Response Time", f"{response_speed}ms")
+    
+    with col4:
+        st.metric("Session Duration", "Active")
+
+elif analysis_type == "API Integration":
+    st.markdown("## 🔌 API Integration & Testing")
+    
+    # API endpoint tester
+    st.markdown("### 🧪 API Endpoint Tester")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        api_method = st.selectbox("Method", ["GET", "POST", "PUT", "DELETE"])
+        api_endpoint = st.text_input("Endpoint", "/api/v1/hotels")
+    
+    with col2:
+        api_params = st.text_area("Parameters (JSON)", '{"business_id": "aloha_resort_waikiki"}')
+    
+    if st.button("Send Request", type="primary"):
+        st.markdown("#### Response")
+        st.json({
+            "status": "success",
+            "data": {
+                "hotel": "Aloha Resort Waikiki",
+                "occupancy": 0.85,
+                "adr": 450,
+                "sentiment": 0.92
+            },
+            "timestamp": datetime.now().isoformat()
+        })
+    
+    # API documentation
+    st.markdown("### 📚 API Documentation")
+    
+    with st.expander("Hotels API"):
+        st.code("""
+        GET /api/v1/hotels - Get all hotels
+        GET /api/v1/hotels/{id} - Get specific hotel
+        POST /api/v1/hotels - Create new hotel
+        PUT /api/v1/hotels/{id} - Update hotel
+        DELETE /api/v1/hotels/{id} - Delete hotel
+        """, language="http")
+    
+    with st.expander("Reviews API"):
+        st.code("""
+        GET /api/v1/reviews - Get all reviews
+        GET /api/v1/reviews/sentiment - Analyze sentiment
+        POST /api/v1/reviews - Add review
+        GET /api/v1/reviews/analytics - Get analytics
+        """, language="http")
+    
+    with st.expander("Chat API"):
+        st.code("""
+        POST /api/v1/chat/message - Send message
+        GET /api/v1/chat/history - Get chat history
+        GET /api/v1/chat/analytics - Get chat analytics
+        POST /api/v1/chat/intent - Classify intent
+        """, language="http")
+    
+    # API key management
+    st.markdown("### 🔑 API Key Management")
+    
+    api_keys = pd.DataFrame({
+        'Name': ['Production', 'Staging', 'Development'],
+        'Key': ['pk_live_***', 'pk_test_***', 'pk_dev_***'],
+        'Created': ['2024-01-15', '2024-02-20', '2024-03-10'],
+        'Status': ['Active', 'Active', 'Inactive']
+    })
+    
+    st.dataframe(api_keys, use_container_width=True)
+    
+    if st.button("Generate New API Key"):
+        st.success("✅ New API key generated: pk_test_" + ''.join(random.choices('abcdef0123456789', k=16)))
 
 elif analysis_type == "Competitive Analysis":
     st.markdown("## 🏆 Competitive Analysis Dashboard")
