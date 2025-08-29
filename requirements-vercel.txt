@@ -1,0 +1,2 @@
+# Minimal requirements for Vercel serverless function
+# No heavy dependencies needed for redirect
