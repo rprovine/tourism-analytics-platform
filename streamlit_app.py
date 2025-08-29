@@ -194,11 +194,47 @@ if analysis_type == "Overview":
         performance_data['Sentiment Score'] * 0.25
     ) * 100
     
-    # Style the dataframe
+    # Display dataframe without gradient (matplotlib not available)
     st.dataframe(
-        performance_data.style.background_gradient(cmap='RdYlGn', subset=['Performance Score']),
+        performance_data,
         use_container_width=True,
-        height=300
+        height=300,
+        column_config={
+            "Performance Score": st.column_config.ProgressColumn(
+                "Performance Score",
+                help="Overall performance metric",
+                format="%.1f",
+                min_value=0,
+                max_value=100,
+            ),
+            "Occupancy Rate": st.column_config.NumberColumn(
+                "Occupancy Rate",
+                help="Current occupancy percentage",
+                format="%d%%",
+            ),
+            "ADR": st.column_config.NumberColumn(
+                "ADR",
+                help="Average Daily Rate",
+                format="$%d",
+            ),
+            "RevPAR": st.column_config.NumberColumn(
+                "RevPAR",
+                help="Revenue per Available Room",
+                format="$%.1f",
+            ),
+            "Sentiment Score": st.column_config.ProgressColumn(
+                "Sentiment Score",
+                help="Guest sentiment rating",
+                format="%.2f",
+                min_value=0,
+                max_value=1,
+            ),
+            "Rating": st.column_config.NumberColumn(
+                "Rating",
+                help="Guest rating out of 5",
+                format="%.1f⭐",
+            ),
+        }
     )
 
 elif analysis_type == "Sentiment Analysis":
