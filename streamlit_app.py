@@ -597,39 +597,52 @@ elif analysis_type == "Lead Management":
     # Lead details view
     st.markdown("### 📋 Recent Prospects")
     
-    # Sample prospect data
-    prospects = pd.DataFrame({
-        'Name': ['John Smith', 'Sarah Johnson', 'Mike Chen', 'Lisa Park', 'Tom Wilson'],
-        'Email': ['john@email.com', 'sarah@email.com', 'mike@email.com', 'lisa@email.com', 'tom@email.com'],
-        'Source': ['Website', 'Social Media', 'Referral', 'Email', 'Direct'],
-        'Score': [95, 87, 72, 68, 45],
-        'Status': ['Hot', 'Hot', 'Warm', 'Warm', 'Cold'],
-        'Last Contact': ['2 hours ago', '5 hours ago', '1 day ago', '2 days ago', '3 days ago']
-    })
-    
-    # Display prospects in a table with error handling
+    # Initialize prospect data with error handling
     try:
-        st.dataframe(
-            prospects,
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "Score": st.column_config.ProgressColumn(
-                    "Lead Score",
-                    help="Lead quality score out of 100",
-                    format="%d",
-                    min_value=0,
-                    max_value=100,
-                ),
-                "Status": st.column_config.SelectboxColumn(
-                    "Status",
-                    options=["Hot", "Warm", "Cold"],
-                )
-            }
-        )
+        # Sample prospect data
+        prospects_data = {
+            'Name': ['John Smith', 'Sarah Johnson', 'Mike Chen', 'Lisa Park', 'Tom Wilson'],
+            'Email': ['john@email.com', 'sarah@email.com', 'mike@email.com', 'lisa@email.com', 'tom@email.com'],
+            'Source': ['Website', 'Social Media', 'Referral', 'Email', 'Direct'],
+            'Score': [95, 87, 72, 68, 45],
+            'Status': ['🔥 Hot', '🔥 Hot', '☀️ Warm', '☀️ Warm', '❄️ Cold'],
+            'Last Contact': ['2 hours ago', '5 hours ago', '1 day ago', '2 days ago', '3 days ago']
+        }
+        
+        # Create DataFrame with error handling
+        prospects = pd.DataFrame(prospects_data)
+        
+        # Display the dataframe
+        st.dataframe(prospects, use_container_width=True, height=250)
+        
+    except ImportError as e:
+        st.error(f"Missing required library: {str(e)}")
+        st.info("Please ensure all required packages are installed")
+        
     except Exception as e:
-        st.error(f"Error loading prospect details: {str(e)}")
-        st.info("Using sample data for demonstration")
+        # Comprehensive fallback display
+        st.warning(f"Table display issue: {str(e)}. Showing simplified view:")
+        
+        # Manual display without DataFrame
+        prospects_list = [
+            {"name": "John Smith", "email": "john@email.com", "status": "🔥 Hot", "score": 95},
+            {"name": "Sarah Johnson", "email": "sarah@email.com", "status": "🔥 Hot", "score": 87},
+            {"name": "Mike Chen", "email": "mike@email.com", "status": "☀️ Warm", "score": 72},
+            {"name": "Lisa Park", "email": "lisa@email.com", "status": "☀️ Warm", "score": 68},
+            {"name": "Tom Wilson", "email": "tom@email.com", "status": "❄️ Cold", "score": 45}
+        ]
+        
+        for prospect in prospects_list:
+            col1, col2, col3, col4 = st.columns([3, 3, 2, 2])
+            with col1:
+                st.write(f"**{prospect['name']}**")
+            with col2:
+                st.write(prospect['email'])
+            with col3:
+                st.write(prospect['status'])
+            with col4:
+                st.write(f"Score: {prospect['score']}")
+            st.divider()
     
     # Lead capture form
     st.markdown("### ➕ Add New Lead")
