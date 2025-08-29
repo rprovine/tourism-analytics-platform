@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
+# Static files import removed for simpler deployment
 import uvicorn
 from contextlib import asynccontextmanager
 import os
@@ -86,11 +86,19 @@ app.add_middleware(
 # Serve landing page
 @app.get("/", response_class=HTMLResponse)
 async def root():
+    import os
+    template_path = os.path.join(os.path.dirname(__file__), "templates", "landing.html")
     try:
-        with open("templates/landing.html", "r") as f:
-            return f.read()
-    except:
-        return "<h1>🌺 Tourism Analytics Platform</h1><p>API is running. Visit <a href='/docs'>/docs</a> for API documentation.</p>"
+        with open(template_path, "r", encoding="utf-8") as f:
+            content = f.read()
+            return content
+    except FileNotFoundError:
+        # Try alternate path
+        try:
+            with open("templates/landing.html", "r", encoding="utf-8") as f:
+                return f.read()
+        except:
+            return "<h1>🌺 Tourism Analytics Platform</h1><p>API is running. Visit <a href='/docs'>/docs</a> for API documentation.</p>"
 
 # Health endpoints
 @app.get("/health")
