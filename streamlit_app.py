@@ -5,6 +5,56 @@ import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import random
+import json
+from io import BytesIO
+import base64
+
+# Utility functions for exports
+def export_to_csv(dataframe, filename):
+    """Convert DataFrame to CSV download link"""
+    csv = dataframe.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()
+    href = f'<a href="data:file/csv;base64,{b64}" download="{filename}.csv">📥 Download CSV</a>'
+    return href
+
+def create_weather_data():
+    """Generate weather impact data"""
+    dates = pd.date_range(start='2024-01-01', end='2024-12-31', freq='D')
+    weather_data = []
+    for date in dates:
+        temp = 75 + 10 * np.sin(2 * np.pi * date.dayofyear / 365) + np.random.normal(0, 3)
+        rain_prob = 0.3 + 0.2 * np.sin(2 * np.pi * (date.dayofyear - 100) / 365)
+        bookings = max(0, 100 + 50 * (temp - 70) / 10 - 30 * rain_prob + np.random.normal(0, 15))
+        weather_data.append({
+            'date': date,
+            'temperature': round(temp, 1),
+            'rain_probability': round(rain_prob, 2),
+            'bookings': int(bookings),
+            'season': 'High' if date.month in [12, 1, 2, 6, 7, 8] else 'Low'
+        })
+    return pd.DataFrame(weather_data)
+
+def create_pricing_data():
+    """Generate dynamic pricing data"""
+    dates = pd.date_range(start='2024-01-01', periods=365)
+    pricing_data = []
+    for date in dates:
+        base_price = 450
+        seasonal_mult = 1.4 if date.month in [12, 1, 2, 6, 7, 8] else 1.0
+        weekend_mult = 1.2 if date.weekday() >= 5 else 1.0
+        demand_mult = 0.8 + 0.4 * np.random.random()
+        
+        current_price = base_price * seasonal_mult * weekend_mult * demand_mult
+        optimal_price = current_price * (1 + 0.1 * np.random.random())
+        
+        pricing_data.append({
+            'date': date,
+            'current_price': round(current_price, 2),
+            'optimal_price': round(optimal_price, 2),
+            'occupancy': round(60 + 30 * demand_mult + np.random.normal(0, 5), 1),
+            'revenue_potential': round((optimal_price - current_price) * 100, 2)
+        })
+    return pd.DataFrame(pricing_data)
 
 # Page configuration
 st.set_page_config(
@@ -13,6 +63,76 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Mobile responsiveness CSS
+st.markdown("""
+<style>
+    /* Mobile-first responsive design */
+    @media (max-width: 768px) {
+        .main .block-container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .metric-container {
+            margin-bottom: 1rem;
+        }
+        
+        /* Make charts more readable on mobile */
+        .js-plotly-plot {
+            width: 100% !important;
+        }
+        
+        /* Sidebar adjustments for mobile */
+        .css-1d391kg {
+            padding: 1rem 0.5rem;
+        }
+        
+        /* Better button sizing for mobile */
+        .stButton > button {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Responsive columns */
+        .row-widget.stColumns {
+            gap: 0.5rem;
+        }
+    }
+    
+    /* Tablet adjustments */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .main .block-container {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    }
+    
+    /* Enhanced visual styling */
+    .main-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        margin: -1rem -1rem 2rem -1rem;
+        color: white;
+        border-radius: 0 0 15px 15px;
+    }
+    
+    .feature-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin: 1rem 0;
+    }
+    
+    .metric-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # Custom CSS for styling
 st.markdown("""
@@ -97,7 +217,9 @@ with st.sidebar:
         "Choose analysis focus",
         ["Overview", "Chat Analytics", "Sentiment Analysis", "Lead Management", 
          "Revenue Analytics", "Demand Forecasting", "Chatbot Simulator", 
-         "API Integration", "Competitive Analysis"]
+         "API Integration", "Competitive Analysis", "Export & Reports", 
+         "Smart Alerts", "Weather Impact", "Dynamic Pricing", "Customer Journey",
+         "Marketing Attribution", "Event Impact", "Activity Recommendations"]
     )
     
     st.markdown("---")
@@ -899,6 +1021,674 @@ elif analysis_type == "Competitive Analysis":
     with col4:
         st.markdown("**🔴 Threats**")
         st.error("• New competitors\n• Economic uncertainty\n• Travel restrictions")
+
+elif analysis_type == "Export & Reports":
+    st.markdown("## 📥 Export & Reporting System")
+    
+    # Report generation options
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 📊 Generate Reports")
+        report_type = st.selectbox("Report Type", [
+            "Executive Summary", "Detailed Analytics", "Lead Report", 
+            "Revenue Analysis", "Sentiment Report", "Custom Report"
+        ])
+        
+        date_range = st.date_input(
+            "Report Period",
+            value=[datetime.now() - timedelta(days=30), datetime.now()],
+            max_value=datetime.now()
+        )
+        
+        format_type = st.radio("Export Format", ["PDF", "Excel", "PowerPoint", "CSV", "JSON"])
+        
+        if st.button("🎯 Generate Report", use_container_width=True):
+            with st.spinner("Generating report..."):
+                # Simulate report generation
+                progress_bar = st.progress(0)
+                for i in range(100):
+                    progress_bar.progress(i + 1)
+                st.success(f"✅ {report_type} generated successfully!")
+                st.download_button(
+                    label=f"📥 Download {report_type}.{format_type.lower()}",
+                    data="Sample report data...",
+                    file_name=f"{report_type}_{datetime.now().strftime('%Y%m%d')}.{format_type.lower()}",
+                    mime="application/octet-stream"
+                )
+    
+    with col2:
+        st.markdown("### 📧 Scheduled Reports")
+        st.checkbox("📈 Daily KPI Summary")
+        st.checkbox("📊 Weekly Performance Report") 
+        st.checkbox("📉 Monthly Trend Analysis")
+        st.checkbox("🎯 Quarterly Business Review")
+        
+        st.markdown("### 👥 Distribution List")
+        recipients = st.text_area("Email Recipients", "management@lenilani.com\nanalytics@lenilani.com")
+        
+        if st.button("💾 Save Schedule"):
+            st.success("Report schedule saved!")
+    
+    # Data export section
+    st.markdown("### 📤 Raw Data Export")
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        if st.button("📊 Export Analytics Data"):
+            sample_data = pd.DataFrame({
+                'Date': pd.date_range('2024-01-01', periods=100),
+                'Visitors': np.random.randint(100, 500, 100),
+                'Revenue': np.random.randint(1000, 5000, 100)
+            })
+            st.markdown(export_to_csv(sample_data, "analytics_data"), unsafe_allow_html=True)
+    
+    with col2:
+        if st.button("👥 Export Leads Data"):
+            leads_data = pd.DataFrame({
+                'Name': [f'Customer {i}' for i in range(50)],
+                'Email': [f'customer{i}@email.com' for i in range(50)],
+                'Score': np.random.randint(20, 100, 50)
+            })
+            st.markdown(export_to_csv(leads_data, "leads_data"), unsafe_allow_html=True)
+    
+    with col3:
+        if st.button("💰 Export Revenue Data"):
+            revenue_data = pd.DataFrame({
+                'Date': pd.date_range('2024-01-01', periods=365),
+                'Revenue': np.random.randint(5000, 15000, 365),
+                'Bookings': np.random.randint(50, 200, 365)
+            })
+            st.markdown(export_to_csv(revenue_data, "revenue_data"), unsafe_allow_html=True)
+
+elif analysis_type == "Smart Alerts":
+    st.markdown("## 🔔 Smart Alerts & Notification System")
+    
+    # Alert configuration
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### ⚙️ Alert Configuration")
+        
+        # Sentiment alerts
+        st.markdown("**🎭 Sentiment Alerts**")
+        sentiment_threshold = st.slider("Negative Sentiment Threshold (%)", 0, 100, 25)
+        st.checkbox("📧 Email alerts for sentiment drops")
+        st.checkbox("📱 SMS alerts for critical sentiment")
+        
+        # Revenue alerts  
+        st.markdown("**💰 Revenue Alerts**")
+        revenue_threshold = st.number_input("Daily Revenue Target ($)", value=10000)
+        st.checkbox("🎯 Alert when target missed")
+        st.checkbox("📈 Alert on revenue spikes")
+        
+        # Lead alerts
+        st.markdown("**👥 Lead Alerts**")
+        lead_threshold = st.slider("High-Value Lead Score", 50, 100, 80)
+        st.checkbox("⭐ Instant alerts for high-value leads")
+        
+    with col2:
+        st.markdown("### 🚨 Active Alerts")
+        
+        # Sample active alerts
+        alerts = [
+            {"type": "warning", "message": "Sentiment dropped 15% in last 24h", "time": "2 hours ago"},
+            {"type": "success", "message": "Revenue target exceeded by 25%", "time": "4 hours ago"}, 
+            {"type": "info", "message": "New high-value lead: John Smith (Score: 95)", "time": "6 hours ago"},
+            {"type": "error", "message": "Booking cancellation spike detected", "time": "8 hours ago"}
+        ]
+        
+        for alert in alerts:
+            if alert['type'] == 'warning':
+                st.warning(f"⚠️ {alert['message']} - {alert['time']}")
+            elif alert['type'] == 'success':
+                st.success(f"✅ {alert['message']} - {alert['time']}")
+            elif alert['type'] == 'info':
+                st.info(f"ℹ️ {alert['message']} - {alert['time']}")
+            else:
+                st.error(f"🚨 {alert['message']} - {alert['time']}")
+    
+    # Alert history
+    st.markdown("### 📊 Alert Analytics")
+    
+    # Alert frequency chart
+    alert_data = pd.DataFrame({
+        'Date': pd.date_range('2024-01-01', periods=30),
+        'Critical': np.random.poisson(2, 30),
+        'Warning': np.random.poisson(5, 30),
+        'Info': np.random.poisson(8, 30)
+    })
+    
+    fig_alerts = px.line(alert_data, x='Date', y=['Critical', 'Warning', 'Info'],
+                        title="Alert Frequency Over Time")
+    st.plotly_chart(fig_alerts, use_container_width=True)
+
+elif analysis_type == "Weather Impact":
+    st.markdown("## 🌦️ Weather Impact Analytics")
+    
+    # Generate weather data
+    weather_df = create_weather_data()
+    
+    # Weather metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        avg_temp = weather_df['temperature'].mean()
+        st.metric("Average Temperature", f"{avg_temp:.1f}°F")
+    
+    with col2:
+        avg_rain = weather_df['rain_probability'].mean()
+        st.metric("Average Rain Probability", f"{avg_rain:.1%}")
+    
+    with col3:
+        weather_corr = weather_df[['temperature', 'bookings']].corr().iloc[0,1]
+        st.metric("Temp-Booking Correlation", f"{weather_corr:.3f}")
+    
+    with col4:
+        rain_impact = -weather_df[['rain_probability', 'bookings']].corr().iloc[0,1]
+        st.metric("Rain Impact Factor", f"{rain_impact:.3f}")
+    
+    # Weather impact visualization
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 🌡️ Temperature vs Bookings")
+        fig_temp = px.scatter(weather_df, x='temperature', y='bookings',
+                             color='season', trendline='ols',
+                             title="Temperature Impact on Bookings")
+        st.plotly_chart(fig_temp, use_container_width=True)
+    
+    with col2:
+        st.markdown("### 🌧️ Rain Probability vs Bookings")
+        fig_rain = px.scatter(weather_df, x='rain_probability', y='bookings',
+                             color='season', trendline='ols',
+                             title="Rain Impact on Bookings")
+        st.plotly_chart(fig_rain, use_container_width=True)
+    
+    # Seasonal analysis
+    st.markdown("### 📅 Seasonal Weather Patterns")
+    monthly_weather = weather_df.groupby(weather_df['date'].dt.month).agg({
+        'temperature': 'mean',
+        'rain_probability': 'mean', 
+        'bookings': 'mean'
+    }).round(2)
+    
+    monthly_weather.index = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    
+    fig_seasonal = go.Figure()
+    fig_seasonal.add_trace(go.Scatter(x=monthly_weather.index, y=monthly_weather['temperature'],
+                                    mode='lines+markers', name='Avg Temperature'))
+    fig_seasonal.add_trace(go.Scatter(x=monthly_weather.index, y=monthly_weather['bookings'],
+                                    mode='lines+markers', name='Avg Bookings', yaxis='y2'))
+    
+    fig_seasonal.update_layout(
+        title="Seasonal Weather and Booking Patterns",
+        yaxis=dict(title="Temperature (°F)", side="left"),
+        yaxis2=dict(title="Bookings", side="right", overlaying="y")
+    )
+    
+    st.plotly_chart(fig_seasonal, use_container_width=True)
+    
+    # Weather forecast integration
+    st.markdown("### 🔮 7-Day Weather-Business Forecast")
+    
+    forecast_data = []
+    for i in range(7):
+        date = datetime.now() + timedelta(days=i)
+        temp = 78 + np.random.normal(0, 5)
+        rain = np.random.random() * 0.6
+        predicted_bookings = max(0, 120 + (temp - 75) * 3 - rain * 50 + np.random.normal(0, 10))
+        
+        forecast_data.append({
+            'Date': date.strftime('%m/%d'),
+            'Day': date.strftime('%A'),
+            'Temperature': f"{temp:.0f}°F",
+            'Rain Chance': f"{rain:.0%}",
+            'Predicted Bookings': int(predicted_bookings),
+            'Recommended Action': 'Promote indoor activities' if rain > 0.4 else 'Promote outdoor activities'
+        })
+    
+    forecast_df = pd.DataFrame(forecast_data)
+    st.dataframe(forecast_df, use_container_width=True)
+
+elif analysis_type == "Dynamic Pricing":
+    st.markdown("## 💰 Dynamic Pricing Optimizer")
+    
+    # Generate pricing data
+    pricing_df = create_pricing_data()
+    
+    # Pricing metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        avg_current = pricing_df['current_price'].mean()
+        st.metric("Average Current Price", f"${avg_current:.0f}")
+    
+    with col2:
+        avg_optimal = pricing_df['optimal_price'].mean()
+        st.metric("Average Optimal Price", f"${avg_optimal:.0f}")
+    
+    with col3:
+        revenue_uplift = pricing_df['revenue_potential'].sum()
+        st.metric("Monthly Revenue Potential", f"${revenue_uplift:,.0f}")
+    
+    with col4:
+        avg_occupancy = pricing_df['occupancy'].mean()
+        st.metric("Average Occupancy", f"{avg_occupancy:.1f}%")
+    
+    # Pricing optimization charts
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 📈 Price vs Occupancy")
+        fig_price_occ = px.scatter(pricing_df, x='current_price', y='occupancy',
+                                  color='revenue_potential', size='revenue_potential',
+                                  title="Current Pricing Efficiency")
+        st.plotly_chart(fig_price_occ, use_container_width=True)
+    
+    with col2:
+        st.markdown("### 💎 Revenue Optimization Opportunities")
+        fig_revenue = px.histogram(pricing_df, x='revenue_potential', nbins=20,
+                                 title="Distribution of Revenue Potential")
+        st.plotly_chart(fig_revenue, use_container_width=True)
+    
+    # Pricing calendar
+    st.markdown("### 📅 Dynamic Pricing Calendar")
+    
+    # Create a sample month view
+    import calendar
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+    
+    month_data = pricing_df[pricing_df['date'].dt.month == current_month].copy()
+    month_data['day'] = month_data['date'].dt.day
+    
+    # Pricing heatmap
+    pricing_matrix = month_data.pivot_table(values='optimal_price', index='day', fill_value=0)
+    
+    if not pricing_matrix.empty:
+        fig_calendar = px.imshow(pricing_matrix.T, 
+                               title=f"Optimal Pricing Calendar - {calendar.month_name[current_month]}",
+                               color_continuous_scale='RdYlGn')
+        st.plotly_chart(fig_calendar, use_container_width=True)
+    
+    # Pricing recommendations
+    st.markdown("### 🎯 Today's Pricing Recommendations")
+    
+    today_data = pricing_df.iloc[0]  # Using first row as "today"
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("**Current Strategy**")
+        st.info(f"""
+        💵 Current Price: ${today_data['current_price']:.0f}
+        📊 Occupancy: {today_data['occupancy']:.1f}%
+        📈 Revenue: ${today_data['current_price'] * today_data['occupancy']:.0f}
+        """)
+    
+    with col2:
+        st.markdown("**Recommended Strategy**")
+        st.success(f"""
+        💎 Optimal Price: ${today_data['optimal_price']:.0f}
+        🎯 Target Occupancy: {today_data['occupancy'] + 5:.1f}%
+        📈 Projected Revenue: ${today_data['optimal_price'] * (today_data['occupancy'] + 5):.0f}
+        """)
+    
+    with col3:
+        st.markdown("**Potential Impact**")
+        revenue_increase = (today_data['optimal_price'] * (today_data['occupancy'] + 5)) - (today_data['current_price'] * today_data['occupancy'])
+        st.warning(f"""
+        💰 Revenue Increase: ${revenue_increase:.0f}
+        📊 ROI: {(revenue_increase / (today_data['current_price'] * today_data['occupancy']) * 100):.1f}%
+        ⏱️ Implementation: Immediate
+        """)
+
+elif analysis_type == "Customer Journey":
+    st.markdown("## 🗺️ Customer Journey Mapping")
+    
+    # Journey stages
+    stages = ['Awareness', 'Research', 'Consideration', 'Booking', 'Experience', 'Advocacy']
+    
+    # Journey metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Avg Journey Length", "12.3 days")
+    with col2:
+        st.metric("Top Entry Point", "Social Media (34%)")
+    with col3:
+        st.metric("Conversion Rate", "8.2%")
+    with col4:
+        st.metric("Avg Touchpoints", "5.7")
+    
+    # Journey funnel
+    st.markdown("### 🔄 Customer Journey Funnel")
+    journey_data = pd.DataFrame({
+        'Stage': stages,
+        'Visitors': [10000, 7500, 4200, 2100, 2000, 1200],
+        'Conversion Rate': [100, 75, 42, 21, 20, 12],
+        'Avg Time': ['0 days', '2.1 days', '5.3 days', '8.7 days', '14 days', '21 days']
+    })
+    
+    fig_journey = px.funnel(journey_data, x='Visitors', y='Stage',
+                           title="Customer Journey Conversion Funnel")
+    st.plotly_chart(fig_journey, use_container_width=True)
+    
+    # Touchpoint analysis
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 📱 Digital Touchpoints")
+        touchpoints = pd.DataFrame({
+            'Touchpoint': ['Website', 'Social Media', 'Email', 'Mobile App', 'Online Ads', 'Reviews'],
+            'Interactions': [8500, 6200, 4100, 3800, 2900, 2400],
+            'Conversion Impact': [0.23, 0.18, 0.31, 0.19, 0.12, 0.35]
+        })
+        
+        fig_touchpoints = px.scatter(touchpoints, x='Interactions', y='Conversion Impact',
+                                   size='Interactions', color='Touchpoint',
+                                   title="Touchpoint Performance")
+        st.plotly_chart(fig_touchpoints, use_container_width=True)
+    
+    with col2:
+        st.markdown("### 🕒 Journey Timeline")
+        timeline_data = pd.DataFrame({
+            'Day': range(1, 15),
+            'Website Visits': np.random.poisson(50, 14),
+            'Social Interactions': np.random.poisson(30, 14),
+            'Email Opens': np.random.poisson(20, 14)
+        })
+        
+        fig_timeline = px.line(timeline_data, x='Day', 
+                              y=['Website Visits', 'Social Interactions', 'Email Opens'],
+                              title="Customer Interaction Timeline")
+        st.plotly_chart(fig_timeline, use_container_width=True)
+    
+    # Journey segments
+    st.markdown("### 👥 Customer Segments Journey")
+    
+    segments = ['Luxury Seekers', 'Family Travelers', 'Adventure Enthusiasts', 'Budget Conscious', 'Business Travelers']
+    segment_data = []
+    
+    for segment in segments:
+        for stage in stages:
+            value = np.random.randint(50, 300)
+            segment_data.append({'Segment': segment, 'Stage': stage, 'Count': value})
+    
+    segment_df = pd.DataFrame(segment_data)
+    
+    fig_segments = px.sunburst(segment_df, path=['Segment', 'Stage'], values='Count',
+                              title="Journey Stages by Customer Segment")
+    st.plotly_chart(fig_segments, use_container_width=True)
+
+elif analysis_type == "Marketing Attribution":
+    st.markdown("## 🎯 Marketing Attribution Analysis")
+    
+    # Attribution metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Total Marketing Spend", "$124,500")
+    with col2:
+        st.metric("Revenue Attributed", "$892,300")
+    with col3:
+        st.metric("ROAS", "7.2x")
+    with col4:
+        st.metric("CAC", "$87")
+    
+    # Channel performance
+    st.markdown("### 📊 Marketing Channel Performance")
+    
+    channels = ['Google Ads', 'Facebook', 'Instagram', 'Email', 'Organic Search', 'Direct', 'Referral']
+    channel_data = pd.DataFrame({
+        'Channel': channels,
+        'Spend': [35000, 28000, 22000, 15000, 12000, 8000, 4500],
+        'Revenue': [245000, 189000, 156000, 98000, 125000, 67000, 32300],
+        'Conversions': [580, 420, 390, 280, 350, 180, 95],
+        'ROAS': [7.0, 6.8, 7.1, 6.5, 10.4, 8.4, 7.2]
+    })
+    
+    # ROAS by channel
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        fig_roas = px.bar(channel_data, x='Channel', y='ROAS',
+                         title="Return on Ad Spend by Channel")
+        st.plotly_chart(fig_roas, use_container_width=True)
+    
+    with col2:
+        fig_spend = px.pie(channel_data, values='Spend', names='Channel',
+                          title="Marketing Spend Distribution")
+        st.plotly_chart(fig_spend, use_container_width=True)
+    
+    # Attribution models comparison
+    st.markdown("### 🎲 Attribution Model Comparison")
+    
+    attribution_models = pd.DataFrame({
+        'Channel': channels,
+        'First Touch': [25, 18, 15, 12, 20, 8, 2],
+        'Last Touch': [22, 20, 18, 10, 15, 12, 3],
+        'Linear': [20, 19, 16, 11, 17, 10, 7],
+        'Time Decay': [18, 21, 17, 12, 16, 11, 5],
+        'Data Driven': [23, 19, 16, 9, 18, 10, 5]
+    })
+    
+    fig_attribution = px.bar(attribution_models, x='Channel',
+                            y=['First Touch', 'Last Touch', 'Linear', 'Time Decay', 'Data Driven'],
+                            title="Revenue Attribution by Model (%)")
+    st.plotly_chart(fig_attribution, use_container_width=True)
+    
+    # Customer lifetime value by channel
+    st.markdown("### 💎 Customer Lifetime Value by Acquisition Channel")
+    
+    clv_data = pd.DataFrame({
+        'Channel': channels,
+        'CLV': [1250, 890, 920, 1450, 1680, 1120, 980],
+        'Avg Order Value': [420, 380, 390, 510, 580, 450, 390],
+        'Repeat Purchase Rate': [0.45, 0.38, 0.41, 0.52, 0.61, 0.48, 0.42]
+    })
+    
+    fig_clv = px.scatter(clv_data, x='Avg Order Value', y='CLV',
+                        size='Repeat Purchase Rate', color='Channel',
+                        title="CLV vs AOV by Channel")
+    st.plotly_chart(fig_clv, use_container_width=True)
+
+elif analysis_type == "Event Impact":
+    st.markdown("## 🎊 Event Impact Analysis")
+    
+    # Event calendar with impact
+    st.markdown("### 📅 Hawaii Events Calendar & Tourism Impact")
+    
+    events_data = pd.DataFrame({
+        'Event': ['Honolulu Marathon', 'Lei Day', 'Merrie Monarch Festival', 'King Kamehameha Day', 
+                 'Aloha Festivals', 'Hawaii Food & Wine Festival', 'Triple Crown of Surfing', 'New Year'],
+        'Date': ['Dec 8', 'May 1', 'Apr 14-20', 'Jun 11', 'Sep 1-30', 'Oct 15-Nov 5', 'Nov 12-Dec 20', 'Dec 31'],
+        'Expected Visitors': [15000, 8000, 25000, 12000, 45000, 18000, 35000, 50000],
+        'Revenue Impact': ['+35%', '+20%', '+60%', '+25%', '+80%', '+40%', '+70%', '+120%'],
+        'Booking Surge Start': ['-14 days', '-7 days', '-21 days', '-10 days', '-30 days', '-20 days', '-25 days', '-45 days']
+    })
+    
+    st.dataframe(events_data, use_container_width=True)
+    
+    # Event impact visualization
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 📈 Event Impact on Bookings")
+        # Simulate booking pattern around events
+        dates = pd.date_range('2024-01-01', periods=365)
+        bookings = []
+        
+        for date in dates:
+            base_bookings = 100
+            # Add spikes for major events
+            if date.month == 12 and date.day in [8, 31]:  # Marathon, New Year
+                base_bookings *= 2.2
+            elif date.month == 11:  # Triple Crown season
+                base_bookings *= 1.7
+            elif date.month == 9:  # Aloha Festivals
+                base_bookings *= 1.8
+            elif date.month == 4 and 14 <= date.day <= 20:  # Merrie Monarch
+                base_bookings *= 1.6
+                
+            bookings.append(int(base_bookings + np.random.normal(0, 10)))
+        
+        event_impact_df = pd.DataFrame({'Date': dates, 'Bookings': bookings})
+        
+        fig_events = px.line(event_impact_df, x='Date', y='Bookings',
+                           title="Annual Booking Pattern with Event Impact")
+        st.plotly_chart(fig_events, use_container_width=True)
+    
+    with col2:
+        st.markdown("### 🌊 Event Category Performance")
+        event_categories = pd.DataFrame({
+            'Category': ['Cultural', 'Sports', 'Music', 'Food', 'Holiday', 'Business'],
+            'Avg Impact': [65, 45, 40, 35, 95, 25],
+            'Duration': [7, 3, 2, 5, 14, 4]
+        })
+        
+        fig_categories = px.scatter(event_categories, x='Duration', y='Avg Impact',
+                                  size='Avg Impact', color='Category',
+                                  title="Event Impact vs Duration by Category")
+        st.plotly_chart(fig_categories, use_container_width=True)
+    
+    # Event recommendation engine
+    st.markdown("### 🎯 Event-Based Marketing Recommendations")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("**🔥 Upcoming High-Impact Events**")
+        st.success("""
+        **Honolulu Marathon** (Dec 8)
+        • Expected +35% bookings
+        • Start marketing: Nov 24
+        • Focus: Sports tourists, mainland US
+        """)
+        
+    with col2:
+        st.markdown("**📈 Pricing Opportunities**")
+        st.info("""
+        **Triple Crown Season** (Nov-Dec)
+        • Increase rates 40-70%
+        • Minimum 3-night stays
+        • Package with surf experiences
+        """)
+    
+    with col3:
+        st.markdown("**🎪 Partnership Opportunities**")
+        st.warning("""
+        **Aloha Festivals** (Sep)
+        • Partner with event organizers
+        • Create cultural packages
+        • 80% revenue increase potential
+        """)
+
+elif analysis_type == "Activity Recommendations":
+    st.markdown("## 🏖️ Activity Recommendation Engine")
+    
+    # Current conditions
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Current Weather", "82°F Sunny")
+    with col2:
+        st.metric("UV Index", "8 (High)")
+    with col3:
+        st.metric("Wind Speed", "12 mph")
+    with col4:
+        st.metric("Wave Height", "3-5 ft")
+    
+    # Activity recommendations
+    st.markdown("### 🌟 Today's Top Activity Recommendations")
+    
+    activities = [
+        {"name": "Snorkeling at Hanauma Bay", "score": 95, "reason": "Perfect visibility, calm waters", "icon": "🤿"},
+        {"name": "Hiking Diamond Head", "score": 88, "reason": "Clear skies, cool morning", "icon": "🥾"},
+        {"name": "Surfing North Shore", "score": 82, "reason": "Good waves, favorable wind", "icon": "🏄‍♂️"},
+        {"name": "Pearl Harbor Tour", "score": 85, "reason": "Indoor/outdoor mix", "icon": "🚢"},
+        {"name": "Luau Experience", "score": 90, "reason": "Perfect evening weather", "icon": "🌺"}
+    ]
+    
+    for i, activity in enumerate(activities):
+        col1, col2, col3, col4 = st.columns([1, 4, 2, 2])
+        
+        with col1:
+            st.markdown(f"## {activity['icon']}")
+        
+        with col2:
+            st.markdown(f"**{activity['name']}**")
+            st.caption(activity['reason'])
+        
+        with col3:
+            st.metric("Match Score", f"{activity['score']}%")
+        
+        with col4:
+            if st.button(f"Book Now", key=f"book_{i}"):
+                st.success(f"Redirecting to {activity['name']} booking...")
+    
+    # Activity heatmap by time and weather
+    st.markdown("### 🕐 Activity Recommendation Heatmap")
+    
+    # Create sample heatmap data
+    hours = [f"{h}:00" for h in range(6, 20)]
+    weather_conditions = ['Sunny', 'Partly Cloudy', 'Cloudy', 'Light Rain', 'Windy']
+    
+    # Generate recommendation scores
+    heatmap_data = []
+    activities_short = ['Beach', 'Hiking', 'Tours', 'Water Sports', 'Cultural']
+    
+    for condition in weather_conditions:
+        row = []
+        for hour in range(len(hours)):
+            # Different activities peak at different times/conditions
+            if condition == 'Sunny':
+                if 6 <= hour <= 10:  # Morning
+                    row.append(np.random.randint(80, 100))
+                else:
+                    row.append(np.random.randint(60, 90))
+            elif condition == 'Light Rain':
+                row.append(np.random.randint(30, 70))
+            else:
+                row.append(np.random.randint(50, 85))
+        heatmap_data.append(row)
+    
+    fig_heatmap = px.imshow(heatmap_data, 
+                           x=hours, y=weather_conditions,
+                           color_continuous_scale='RdYlGn',
+                           title="Activity Recommendation Scores by Time & Weather")
+    st.plotly_chart(fig_heatmap, use_container_width=True)
+    
+    # Personalized recommendations
+    st.markdown("### 🎯 Personalized Recommendations")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("**Set Your Preferences**")
+        activity_type = st.selectbox("Activity Type", 
+                                   ['Adventure', 'Relaxation', 'Cultural', 'Family-Friendly', 'Romantic'])
+        fitness_level = st.slider("Fitness Level", 1, 5, 3)
+        budget_range = st.select_slider("Budget Range", 
+                                      ['$', '$$', '$$$', '$$$$'], value='$$')
+        group_size = st.number_input("Group Size", 1, 20, 2)
+    
+    with col2:
+        st.markdown("**Your Customized Recommendations**")
+        
+        recommendations = {
+            'Adventure': ['Zipline Tours', 'Volcano Helicopter Tour', 'ATV Rides'],
+            'Relaxation': ['Spa Day', 'Beach Lounging', 'Sunset Cruise'],
+            'Cultural': ['Polynesian Cultural Center', 'Historic Honolulu', 'Lei Making'],
+            'Family-Friendly': ['Aquarium Visit', 'Mini Golf', 'Beach Games'],
+            'Romantic': ['Sunset Dinner Cruise', 'Couples Massage', 'Private Beach']
+        }
+        
+        for rec in recommendations.get(activity_type, []):
+            st.success(f"✨ {rec}")
+            st.caption(f"Perfect for {group_size} people • {budget_range} budget range")
 
 # Footer
 st.markdown("---")
