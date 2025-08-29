@@ -34,10 +34,10 @@ st.markdown("""
         margin: 1rem 0;
     }
     .stMetric {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
         padding: 1rem;
         border-radius: 10px;
-        color: white;
+        border: 2px solid #667eea;
     }
 </style>
 """, unsafe_allow_html=True)
