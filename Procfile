@@ -1,1 +1,1 @@
-web: uvicorn main-minimal:app --host 0.0.0.0 --port $PORT
+web: uvicorn app-ultra-minimal:app --host 0.0.0.0 --port $PORT
