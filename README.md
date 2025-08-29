@@ -1,6 +1,6 @@
 # 🌺 Tourism Analytics Platform
 
-> **🚀 Engineered & Maintained by [KoinTyme](https://kointyme.com) - Pioneering AI Solutions for Tourism Industry**
+> **🚀 Engineered & Maintained by [LeniLani Consulting](https://lenilani.com) - Pioneering AI Solutions for Tourism Industry**
 
 A comprehensive FastAPI-based analytics platform for tourism businesses featuring visitor sentiment analysis, demand forecasting, multilingual chatbot, business insights dashboard, and HubSpot CRM integration.
 
