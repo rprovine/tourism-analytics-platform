@@ -238,24 +238,6 @@ filtered_data = st.session_state.hotels_data[st.session_state.hotels_data['Hotel
 
 # Main content area based on analysis type
 if analysis_type == "Overview":
-    # Hero Section
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                padding: 2rem; 
-                border-radius: 15px; 
-                text-align: center; 
-                margin-bottom: 2rem;
-                color: white;">
-        <h1 style="margin: 0; font-size: 2.5rem; font-weight: 700;">🌺 Tourism Analytics Platform</h1>
-        <p style="font-size: 1.2rem; margin: 0.5rem 0 0 0; opacity: 0.9;">
-            Comprehensive business intelligence for Hawaii's hospitality industry
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Quick Stats Overview
-    st.markdown("### 📊 Key Performance Indicators")
-    
     # Key Metrics Row
     col1, col2, col3, col4, col5 = st.columns(5)
     
@@ -299,85 +281,96 @@ if analysis_type == "Overview":
             f"+{random.randint(10, 50)}"
         )
     
-    # Feature Overview Cards
-    st.markdown("---")
-    st.markdown("### 🚀 Platform Features")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-        <div style="background: #f8f9fa; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    border-left: 4px solid #667eea;
-                    margin-bottom: 1rem;">
-            <h4 style="margin: 0 0 0.5rem 0;">🎯 AI Lead Scoring</h4>
-            <p style="margin: 0; color: #666;">
-                Advanced machine learning algorithms analyze visitor behavior and score leads 
-                for maximum conversion potential.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div style="background: #f8f9fa; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    border-left: 4px solid #764ba2;
-                    margin-bottom: 1rem;">
-            <h4 style="margin: 0 0 0.5rem 0;">💬 Chat Analytics</h4>
-            <p style="margin: 0; color: #666;">
-                Real-time conversation analysis with sentiment tracking, response optimization,
-                and visitor intent classification.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown("""
-        <div style="background: #f8f9fa; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    border-left: 4px solid #28a745;
-                    margin-bottom: 1rem;">
-            <h4 style="margin: 0 0 0.5rem 0;">📈 Demand Forecasting</h4>
-            <p style="margin: 0; color: #666;">
-                Predictive analytics for occupancy, pricing optimization, and seasonal 
-                trend analysis using historical data.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Charts Row for visual appeal
+    # Charts Row
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("#### 📊 Occupancy by Hotel")
+        st.markdown("### 📊 Occupancy Rate by Hotel")
         fig_occupancy = px.bar(
             filtered_data,
             x='Hotel',
             y='Occupancy Rate',
             color='Occupancy Rate',
-            color_continuous_scale='Viridis'
+            color_continuous_scale='Viridis',
+            title="Current Occupancy Rates"
         )
-        fig_occupancy.update_layout(showlegend=False, height=300)
+        fig_occupancy.update_layout(showlegend=False)
         st.plotly_chart(fig_occupancy, use_container_width=True)
     
     with col2:
-        st.markdown("#### 💰 Revenue Performance")
-        fig_revenue = px.scatter(
-            filtered_data,
-            x='ADR',
-            y='RevPAR',
-            size='Occupancy Rate',
-            color='Sentiment Score',
-            hover_name='Hotel',
-            color_continuous_scale='RdYlGn'
-        )
-        fig_revenue.update_layout(height=300)
+        st.markdown("### 💰 Revenue Performance")
+        fig_revenue = go.Figure()
+        fig_revenue.add_trace(go.Scatter(
+            x=filtered_data['Hotel'],
+            y=filtered_data['ADR'],
+            mode='lines+markers',
+            name='ADR',
+            line=dict(color='#667eea', width=3)
+        ))
+        fig_revenue.add_trace(go.Scatter(
+            x=filtered_data['Hotel'],
+            y=filtered_data['RevPAR'],
+            mode='lines+markers',
+            name='RevPAR',
+            line=dict(color='#764ba2', width=3)
+        ))
+        fig_revenue.update_layout(title="ADR vs RevPAR Comparison", hovermode='x unified')
         st.plotly_chart(fig_revenue, use_container_width=True)
+    
+    # Performance Matrix
+    st.markdown("### 🎯 Performance Matrix")
+    
+    # Create performance data
+    performance_data = filtered_data[['Hotel', 'Occupancy Rate', 'ADR', 'RevPAR', 'Sentiment Score', 'Rating']]
+    performance_data['Performance Score'] = (
+        performance_data['Occupancy Rate'] / 100 * 0.25 +
+        performance_data['ADR'] / 700 * 0.25 +
+        performance_data['RevPAR'] / 600 * 0.25 +
+        performance_data['Sentiment Score'] * 0.25
+    ) * 100
+    
+    # Display dataframe without gradient (matplotlib not available)
+    st.dataframe(
+        performance_data,
+        use_container_width=True,
+        height=300,
+        column_config={
+            "Performance Score": st.column_config.ProgressColumn(
+                "Performance Score",
+                help="Overall performance metric",
+                format="%.1f",
+                min_value=0,
+                max_value=100,
+            ),
+            "Occupancy Rate": st.column_config.NumberColumn(
+                "Occupancy Rate",
+                help="Current occupancy percentage",
+                format="%d%%",
+            ),
+            "ADR": st.column_config.NumberColumn(
+                "ADR",
+                help="Average Daily Rate",
+                format="$%d",
+            ),
+            "RevPAR": st.column_config.NumberColumn(
+                "RevPAR",
+                help="Revenue per Available Room",
+                format="$%.1f",
+            ),
+            "Sentiment Score": st.column_config.ProgressColumn(
+                "Sentiment Score",
+                help="Guest sentiment rating",
+                format="%.2f",
+                min_value=0,
+                max_value=1,
+            ),
+            "Rating": st.column_config.NumberColumn(
+                "Rating",
+                help="Guest rating out of 5",
+                format="%.1f⭐",
+            ),
+        }
+    )
 
 elif analysis_type == "Sentiment Analysis":
     st.markdown("## 💭 Sentiment Analysis Dashboard")
