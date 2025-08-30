@@ -2,229 +2,140 @@
 
 > **🚀 Live at [analytics.lenilani.com](https://analytics.lenilani.com) - Powered by [Lenilani](https://lenilani.com)**
 
-A comprehensive Streamlit-based analytics dashboard for Hawaii's tourism industry featuring real-time insights, chat analytics, sentiment analysis, lead management, and demand forecasting.
+A comprehensive Streamlit-based business intelligence suite for Hawaiian hotels and tourism businesses, featuring AI-powered analytics, real-time insights, and Hawaii-focused solutions.
 
 ---
 
 **⚡ Enterprise-Grade Tourism Intelligence Platform**  
-*Built with cutting-edge AI and machine learning technologies to transform hospitality data into actionable business insights.*
+*Built with cutting-edge AI and machine learning technologies to transform hospitality data into actionable business insights specifically for Hawaii's unique tourism market.*
 
 ## 🌐 Live Demo
 
-**Production URL:** https://analytics.lenilani.com
+**Production URL:** https://analytics.lenilani.com  
+**Streamlit App:** https://tourism-analytics-platform-lenilani.streamlit.app
 
-## Features
+## 🏨 Hawaiian Hotel Use Cases
 
-### 🎯 Core Analytics Modules
+### 🌺 **Waikiki Resort Properties**
+- Monitor guest sentiment across Japanese, Chinese, and English reviews
+- Optimize room rates during peak surf seasons and holidays  
+- Track competitor pricing at nearby beachfront hotels
+- Forecast demand for luau bookings and cultural experiences
 
-1. **Overview Dashboard**
-   - Key performance metrics and KPIs
-   - Real-time visitor trends
-   - Engagement statistics
-   - Quick insights summary
+### 🏝️ **Luxury Maui Resorts**
+- Analyze chat conversations for upselling spa and dining packages
+- Score leads based on interest in wedding venues and honeymoon suites
+- Weather-based pricing for oceanview rooms during whale season
+- Track satisfaction scores for snorkeling and sunset dinner excursions
 
-2. **Chat Analytics**
-   - Conversation volume tracking
-   - Response time metrics
-   - User satisfaction scores
-   - Topic analysis and trends
+### 🌋 **Big Island Adventure Hotels**
+- Correlate volcano activity alerts with booking cancellations
+- Optimize adventure tour packages based on guest demographics
+- Monitor helicopter tour and lava viewing demand patterns
+- Track guest journey from inquiry to volcano tour booking
 
-3. **Sentiment Analysis**
-   - Real-time sentiment tracking
-   - Trend analysis over time
-   - Sentiment by source
-   - Alert system for negative trends
+### 🐠 **Kauai Eco-Resorts**
+- Analyze sustainability messaging impact on bookings
+- Forecast demand for hiking and snorkeling activities
+- Monitor weather patterns affecting Na Pali Coast tours
+- Track eco-conscious traveler sentiment and preferences
 
-4. **Lead Management**
-   - Lead scoring and tracking
-   - Conversion funnel analysis
-   - Source attribution
-   - ROI metrics
+## 🚀 Complete Platform Capabilities
 
-5. **Revenue Analytics**
-   - Revenue forecasting
-   - Seasonal trend analysis
-   - Channel performance
-   - Pricing optimization insights
+### 🎯 **Core Analytics & Intelligence**
+- **🔍 Prospect Discovery** - Automated lead identification and cross-platform visitor tracking
+- **🧠 AI Lead Scoring** - Machine learning algorithms with behavioral pattern analysis
+- **📊 Data Collection** - Multi-source data integration with real-time processing
+- **💬 Chat Analytics** - Conversation sentiment analysis with multi-language support
 
-6. **Demand Forecasting**
-   - Predictive analytics
-   - Seasonal patterns
-   - Market trend analysis
-   - Capacity planning
+### 📈 **Advanced Analytics & Forecasting**
+- **💭 Sentiment Analysis** - Real-time review monitoring and emotion detection
+- **🎯 Lead Management** - CRM integration with automated follow-up triggers
+- **💰 Revenue Analytics** - Revenue stream analysis and profit margin optimization
+- **📊 Demand Forecasting** - Predictive booking models with dynamic pricing
 
-7. **Chatbot Simulator**
-   - Test conversation flows
-   - Simulate user interactions
-   - Response optimization
-   - Training data generation
+### 🛠️ **Operational & Management Tools**
+- **🤖 Chatbot Simulator** - Conversation flow testing and response optimization
+- **🔌 API Integration** - Third-party connections with real-time data sync
+- **🏆 Competitive Analysis** - Market positioning insights and competitor benchmarking
+- **📋 Export & Reports** - Custom report generation with executive dashboards
 
-8. **API Integration**
-   - RESTful API endpoints
-   - Data export capabilities
-   - Third-party integrations
-   - Webhook support
+### 🌟 **Specialized Hawaii Tourism Features**
+- **🚨 Smart Alerts** - Weather-based notifications and booking threshold alerts
+- **🌤️ Weather Impact** - Climate-based pricing and seasonal pattern analysis
+- **💲 Dynamic Pricing** - Real-time rate optimization with competitor matching
+- **🗺️ Customer Journey** - Touchpoint mapping and experience optimization
 
-9. **Competitive Analysis**
-   - Market positioning
-   - Competitor benchmarking
-   - SWOT analysis
-   - Market share tracking
+### 🌺 **Additional Advanced Features**
+- **📱 Marketing Attribution** - Channel performance analysis and campaign ROI tracking
+- **🎉 Event Impact** - Local event correlations and festival demand spikes
+- **🏄 Activity Recommendations** - Personalized suggestions with satisfaction tracking
 
-## Technology Stack
+## 🎨 **Enhanced Landing Page Features**
 
-- **Frontend Framework**: Streamlit
-- **Data Visualization**: Plotly, Matplotlib
-- **Data Processing**: Pandas, NumPy
-- **Deployment**: Streamlit Cloud + Vercel
-- **Custom Domain**: analytics.lenilani.com
-- **Version Control**: Git, GitHub
+### Visual Design
+- **Gradient Hero Section** - Professional branding with Tourism Analytics Platform identity
+- **Styled Background Boxes** - Color-coded sections with shadows and rounded corners
+- **Feature Cards** - Consistent white backgrounds with colored accent borders
+- **Hawaiian Hotel Cards** - Island-specific color themes for easy identification
 
-## 🚀 Deployment
+### Content Organization
+- **KPI Dashboard** - Real-time metrics display with trend indicators
+- **Comprehensive Feature Overview** - All 20+ capabilities organized by category
+- **Platform Benefits** - Specific business value propositions for Hawaiian tourism
+- **Performance Visualizations** - Interactive charts showing occupancy and revenue data
 
-### Production Deployment
+## 💻 Technology Stack
 
-The platform is deployed using a combination of Streamlit Cloud and Vercel:
+- **Frontend Framework**: Streamlit with custom styling
+- **Data Visualization**: Plotly, Matplotlib with interactive charts
+- **Data Processing**: Pandas, NumPy for real-time analytics
+- **AI/ML**: Advanced algorithms for sentiment analysis and forecasting
+- **Deployment**: Streamlit Cloud + Vercel proxy for custom domain
+- **Version Control**: Git, GitHub with automated deployments
 
-- **Frontend**: Streamlit Cloud (https://tourism-analytics-platform-lenilani.streamlit.app)
-- **Custom Domain**: Vercel proxy (https://analytics.lenilani.com)
-- **Repository**: https://github.com/rprovine/tourism-analytics-platform
+## 🚀 Quick Start
 
-### Local Development
+### **Access the Platform**
+1. Visit **[analytics.lenilani.com](https://analytics.lenilani.com)**
+2. Explore the comprehensive landing page with all features
+3. Navigate through different analytics modules using the sidebar
+4. View real-time data and interactive visualizations
 
-1. **Clone the repository:**
+### **Local Development**
 ```bash
+# Clone the repository
 git clone https://github.com/rprovine/tourism-analytics-platform.git
 cd tourism-analytics-platform
-```
 
-2. **Install dependencies:**
-```bash
+# Install dependencies  
 pip install -r requirements.txt
-```
 
-3. **Run the application:**
-```bash
+# Run the application
 streamlit run streamlit_app.py
+
+# Access locally at http://localhost:8501
 ```
-
-4. **Access locally:**
-```
-http://localhost:8501
-```
-
-## 📁 Project Structure
-
-```
-tourism-analytics-platform/
-├── streamlit_app.py          # Main Streamlit application
-├── requirements.txt          # Python dependencies
-├── .streamlit/
-│   └── config.toml          # Streamlit configuration
-├── public/
-│   ├── index.html           # Redirect page
-│   └── embed.html           # Embed wrapper
-├── vercel.json              # Vercel configuration
-├── package.json             # Node.js metadata
-├── VERCEL_SETUP.md          # Vercel setup documentation
-└── README.md                # This file
-```
-
-## 🔧 Configuration
-
-### Streamlit Configuration
-
-The app uses a custom theme defined in `.streamlit/config.toml`:
-- Primary Color: `#667eea` (Purple)
-- Background: White
-- Font: Sans serif
-
-### Vercel Configuration
-
-Custom domain routing is handled through `vercel.json` with:
-- Static file serving from `/public`
-- Automatic redirect to Streamlit app
-- Embed mode for seamless integration
-
-## 📈 Data Sources
-
-Currently using simulated data for demonstration purposes. In production, integrate with:
-- Chat platform APIs
-- Google Analytics
-- CRM systems
-- Payment gateways
-- Social media APIs
-
-## 🔒 Security
-
-- All data is processed server-side
-- No sensitive data stored in browser
-- HTTPS encryption enforced
-- Environment variables for secrets
-
-## 🎯 Roadmap
-
-- [ ] Real-time data integration
-- [ ] Advanced ML models
-- [ ] Mobile responsive design
-- [ ] Multi-language support
-- [ ] Export functionality
-- [ ] User authentication
-- [ ] Custom dashboards
-- [ ] Email alerts
 
 ---
 
-## 🏢 About Lenilani
+## 🏢 **About Lenilani**
 
-**Lenilani** is a leading technology innovator specializing in AI-powered solutions for Hawaii's tourism and hospitality industry. We transform complex data into actionable insights that drive business growth and enhance visitor experiences.
+**Lenilani** is Hawaii's leading technology innovator specializing in AI-powered solutions for the islands' tourism and hospitality industry.
 
-### Our Expertise
-- 🧠 **Artificial Intelligence & Machine Learning**
-- 📊 **Advanced Data Analytics & Business Intelligence** 
-- 🚀 **Enterprise Software Development**
-- 🌺 **Hawaii Tourism Technology Solutions**
-- 📱 **Real-time Dashboard & Visualization Platforms**
+### **Why Choose Lenilani?**
+- ✅ **Local Expertise** with deep understanding of Hawaii's unique tourism market
+- ✅ **Cutting-Edge Technology** using the latest AI and ML frameworks  
+- ✅ **Industry Leadership** in Pacific tourism analytics
+- ✅ **Scalable Architecture** built for rapid growth and seasonal demands
 
-### Why Choose Lenilani?
-- ✅ **Local Expertise** with deep understanding of Hawaii's unique market
-- ✅ **Cutting-Edge Technology** using the latest frameworks
-- ✅ **Industry Leadership** in tourism analytics
-- ✅ **Scalable Architecture** built for growth
-- ✅ **Dedicated Support** ensuring continuous operation
-
-**Ready to transform your tourism business with AI?**  
-📧 Contact us: [support@lenilani.com](mailto:support@lenilani.com)  
-🌐 Visit: [www.lenilani.com](https://lenilani.com)
+**Ready to transform your Hawaiian tourism business with AI?**  
+📧 Contact: [support@lenilani.com](mailto:support@lenilani.com) | 🌐 Visit: [lenilani.com](https://lenilani.com)
 
 ---
 
-## 🤝 Contributing
+**Built with ❤️ for Hawaii's Tourism Industry**
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a pull request
+*Last Updated: August 2024 | Version: 2.0.0 | Status: Production Ready*
 
-## 📝 License
-
-Copyright © 2024 Lenilani. All rights reserved.
-
-## 🆘 Support
-
-For issues or questions:
-- GitHub Issues: https://github.com/rprovine/tourism-analytics-platform/issues
-- Email: support@lenilani.com
-
-## 🙏 Acknowledgments
-
-Built with Streamlit, deployed on Vercel, and powered by the Hawaii tourism community.
-
----
-
-**Last Updated:** August 2025  
-**Version:** 1.0.0  
-**Status:** Production
-
-*© 2024 Lenilani. All rights reserved. This Tourism Analytics Platform represents our commitment to revolutionizing Hawaii's hospitality industry through innovative AI solutions.*
+© 2024 Lenilani. All rights reserved.
