@@ -241,17 +241,14 @@ if analysis_type == "Overview":
     # Hero Section
     st.markdown("""
     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                padding: 2.5rem; 
+                padding: 2rem; 
                 border-radius: 15px; 
                 text-align: center; 
                 margin-bottom: 2rem;
                 color: white;">
-        <h1 style="margin: 0; font-size: 3rem; font-weight: 700;">🌺 Tourism Analytics Platform</h1>
-        <p style="font-size: 1.3rem; margin: 1rem 0; opacity: 0.9;">
-            Complete Business Intelligence Suite for Hawaiian Hotels & Tourism Businesses
-        </p>
-        <p style="font-size: 1rem; margin: 0; opacity: 0.8;">
-            AI-Powered • Real-Time Analytics • Hawaii-Focused Solutions
+        <h1 style="margin: 0; font-size: 2.5rem; font-weight: 700;">🌺 Tourism Analytics Platform</h1>
+        <p style="font-size: 1.2rem; margin: 0.5rem 0 0 0; opacity: 0.9;">
+            Comprehensive business intelligence for Hawaii's hospitality industry
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -302,307 +299,74 @@ if analysis_type == "Overview":
             f"+{random.randint(10, 50)}"
         )
     
-    # Hawaiian Hotel Use Cases Section
+    # Feature Overview Cards
     st.markdown("---")
-    st.markdown("### 🏨 How Hawaiian Hotels Use This Platform")
+    st.markdown("### 🚀 Platform Features")
     
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        **🌺 Waikiki Resort Properties**
-        - Monitor guest sentiment across Japanese, Chinese, and English reviews
-        - Optimize room rates during peak surf seasons and holidays
-        - Track competitor pricing at nearby beachfront hotels
-        - Forecast demand for luau bookings and cultural experiences
-        
-        **🏝️ Luxury Maui Resorts** 
-        - Analyze chat conversations for upselling spa and dining packages
-        - Score leads based on interest in wedding venues and honeymoon suites
-        - Weather-based pricing for oceanview rooms during whale season
-        - Track satisfaction scores for snorkeling and sunset dinner excursions
-        """)
-    
-    with col2:
-        st.markdown("""
-        **🌋 Big Island Adventure Hotels**
-        - Correlate volcano activity alerts with booking cancellations
-        - Optimize adventure tour packages based on guest demographics  
-        - Monitor helicopter tour and lava viewing demand patterns
-        - Track guest journey from inquiry to volcano tour booking
-        
-        **🐠 Kauai Eco-Resorts**
-        - Analyze sustainability messaging impact on bookings
-        - Forecast demand for hiking and snorkeling activities
-        - Monitor weather patterns affecting Na Pali Coast tours
-        - Track eco-conscious traveler sentiment and preferences
-        """)
-    
-    # Complete Feature Overview
-    st.markdown("---")
-    st.markdown("### 🚀 Complete Platform Capabilities")
-    
-    # Core Analytics Features
-    st.markdown("#### 🎯 Core Analytics & Intelligence")
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("""
-        **🔍 Prospect Discovery**
-        - Automated lead identification
-        - Cross-platform visitor tracking
-        - Intent analysis and scoring
-        - Conversion funnel optimization
-        """)
-    
-    with col2:
-        st.markdown("""
-        **🧠 AI Lead Scoring**
-        - Machine learning algorithms
-        - Behavioral pattern analysis  
-        - Predictive conversion scoring
-        - Automated lead prioritization
-        """)
-    
-    with col3:
-        st.markdown("""
-        **📊 Data Collection**
-        - Multi-source data integration
-        - Real-time data processing
-        - Automated data validation
-        - Custom data pipelines
-        """)
-    
-    with col4:
-        st.markdown("""
-        **💬 Chat Analytics**
-        - Conversation sentiment analysis
-        - Response time optimization
-        - Intent classification
-        - Multi-language support
-        """)
-    
-    # Advanced Features
-    st.markdown("#### 📈 Advanced Analytics & Forecasting")
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("""
-        **💭 Sentiment Analysis**
-        - Real-time review monitoring
-        - Social media sentiment tracking
-        - Emotion detection & analysis
-        - Trend identification
-        """)
-    
-    with col2:
-        st.markdown("""
-        **🎯 Lead Management**
-        - CRM integration
-        - Lead lifecycle tracking
-        - Automated follow-up triggers
-        - Conversion rate optimization
-        """)
-    
-    with col3:
-        st.markdown("""
-        **💰 Revenue Analytics**
-        - Revenue stream analysis
-        - Channel performance tracking
-        - ROI measurement
-        - Profit margin optimization
-        """)
-    
-    with col4:
-        st.markdown("""
-        **📊 Demand Forecasting**
-        - Predictive booking models
-        - Seasonal trend analysis
-        - Capacity planning tools
-        - Dynamic pricing optimization
-        """)
-    
-    # Operational Tools
-    st.markdown("#### 🛠️ Operational & Management Tools")
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("""
-        **🤖 Chatbot Simulator**
-        - Conversation flow testing
-        - Response optimization
-        - Training data generation
-        - Performance benchmarking
-        """)
-    
-    with col2:
-        st.markdown("""
-        **🔌 API Integration**
-        - Third-party connections
-        - Real-time data sync
-        - Custom integrations
-        - Webhook automation
-        """)
-    
-    with col3:
-        st.markdown("""
-        **🏆 Competitive Analysis**
-        - Market positioning insights
-        - Competitor benchmarking
-        - Pricing comparison tools
-        - Market share tracking
-        """)
-    
-    with col4:
-        st.markdown("""
-        **📋 Export & Reports**
-        - Custom report generation
-        - Automated reporting
-        - Data visualization
-        - Executive dashboards
-        """)
-    
-    # Specialized Features
-    st.markdown("#### 🌟 Specialized Hawaii Tourism Features")
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("""
-        **🚨 Smart Alerts**
-        - Weather-based notifications
-        - Booking threshold alerts
-        - Sentiment drop warnings
-        - Revenue target tracking
-        """)
-    
-    with col2:
-        st.markdown("""
-        **🌤️ Weather Impact**
-        - Weather-booking correlations
-        - Activity demand forecasting
-        - Seasonal pattern analysis
-        - Climate-based pricing
-        """)
-    
-    with col3:
-        st.markdown("""
-        **💲 Dynamic Pricing**
-        - Real-time rate optimization
-        - Demand-based pricing
-        - Competitor rate matching
-        - Revenue maximization
-        """)
-    
-    with col4:
-        st.markdown("""
-        **🗺️ Customer Journey**
-        - Touchpoint mapping
-        - Conversion path analysis
-        - Experience optimization
-        - Retention strategies
-        """)
-    
-    # Additional Advanced Features
     col1, col2, col3 = st.columns(3)
     
     with col1:
         st.markdown("""
-        **📱 Marketing Attribution**
-        - Channel performance analysis
-        - Campaign ROI tracking
-        - Customer acquisition costs
-        - Attribution modeling
-        """)
+        <div style="background: #f8f9fa; 
+                    padding: 1.5rem; 
+                    border-radius: 10px; 
+                    border-left: 4px solid #667eea;
+                    margin-bottom: 1rem;">
+            <h4 style="margin: 0 0 0.5rem 0;">🎯 AI Lead Scoring</h4>
+            <p style="margin: 0; color: #666;">
+                Advanced machine learning algorithms analyze visitor behavior and score leads 
+                for maximum conversion potential.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-        **🎉 Event Impact**
-        - Local event correlations
-        - Festival demand spikes
-        - Cultural event planning
-        - Special occasion tracking
-        """)
+        <div style="background: #f8f9fa; 
+                    padding: 1.5rem; 
+                    border-radius: 10px; 
+                    border-left: 4px solid #764ba2;
+                    margin-bottom: 1rem;">
+            <h4 style="margin: 0 0 0.5rem 0;">💬 Chat Analytics</h4>
+            <p style="margin: 0; color: #666;">
+                Real-time conversation analysis with sentiment tracking, response optimization,
+                and visitor intent classification.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
     
     with col3:
         st.markdown("""
-        **🏄 Activity Recommendations**
-        - Personalized suggestions
-        - Activity demand forecasting
-        - Experience optimization
-        - Guest satisfaction tracking
-        """)
+        <div style="background: #f8f9fa; 
+                    padding: 1.5rem; 
+                    border-radius: 10px; 
+                    border-left: 4px solid #28a745;
+                    margin-bottom: 1rem;">
+            <h4 style="margin: 0 0 0.5rem 0;">📈 Demand Forecasting</h4>
+            <p style="margin: 0; color: #666;">
+                Predictive analytics for occupancy, pricing optimization, and seasonal 
+                trend analysis using historical data.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
     
-    # Specific Hawaiian Business Benefits
-    st.markdown("---")
-    st.markdown("### 🌺 Why Hawaiian Tourism Businesses Choose Our Platform")
-    
+    # Charts Row for visual appeal
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("""
-        **🏝️ Local Market Expertise**
-        - Understanding of Hawaiian hospitality culture
-        - Island-specific tourism patterns and seasonality
-        - Integration with local tour operators and activities
-        - Knowledge of international visitor preferences (Japan, Korea, China)
-        
-        **🌊 Hawaii-Specific Analytics**
-        - Weather impact on outdoor activities and bookings
-        - Ocean condition effects on water sports demand
-        - Cultural event and festival impact analysis
-        - Inter-island travel pattern tracking
-        
-        **🎯 Tourism Industry Focus**
-        - Hotel, resort, and vacation rental optimization
-        - Activity and tour operator insights
-        - Restaurant and dining experience analytics
-        - Retail and souvenir shop performance tracking
-        """)
-    
-    with col2:
-        st.markdown("""
-        **🚀 Advanced AI Technology**
-        - Machine learning models trained on Hawaiian tourism data
-        - Multi-language support for international guests
-        - Real-time sentiment analysis in 15+ languages
-        - Predictive analytics for seasonal demand patterns
-        
-        **💡 Actionable Business Intelligence**
-        - Increase average daily rates by 15-25%
-        - Improve occupancy rates through better forecasting
-        - Reduce guest service response times by 40%
-        - Optimize marketing spend with attribution tracking
-        
-        **🔗 Seamless Integration**
-        - Connect with existing PMS and CRM systems
-        - API-first architecture for custom solutions
-        - Real-time data synchronization
-        - Cloud-based scalability for peak seasons
-        """)
-    
-    # Performance Visualizations
-    st.markdown("---")
-    st.markdown("### 📈 Current Performance Overview")
-    
-    # Charts Row
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("#### 📊 Hotel Occupancy Performance")
+        st.markdown("#### 📊 Occupancy by Hotel")
         fig_occupancy = px.bar(
             filtered_data,
             x='Hotel',
             y='Occupancy Rate',
             color='Occupancy Rate',
-            color_continuous_scale='Viridis',
-            title="Current Occupancy Rates Across Properties"
+            color_continuous_scale='Viridis'
         )
-        fig_occupancy.update_layout(showlegend=False, height=400)
-        fig_occupancy.update_xaxes(tickangle=45)
+        fig_occupancy.update_layout(showlegend=False, height=300)
         st.plotly_chart(fig_occupancy, use_container_width=True)
     
     with col2:
-        st.markdown("#### 💰 Revenue & Sentiment Correlation")
+        st.markdown("#### 💰 Revenue Performance")
         fig_revenue = px.scatter(
             filtered_data,
             x='ADR',
@@ -610,11 +374,9 @@ if analysis_type == "Overview":
             size='Occupancy Rate',
             color='Sentiment Score',
             hover_name='Hotel',
-            hover_data=['Total Reviews'],
-            color_continuous_scale='RdYlGn',
-            title="Revenue Performance vs Guest Satisfaction"
+            color_continuous_scale='RdYlGn'
         )
-        fig_revenue.update_layout(height=400)
+        fig_revenue.update_layout(height=300)
         st.plotly_chart(fig_revenue, use_container_width=True)
 
 elif analysis_type == "Sentiment Analysis":
