@@ -245,8 +245,7 @@ if analysis_type == "Overview":
                 border-radius: 15px; 
                 text-align: center; 
                 margin-bottom: 2rem;
-                color: white;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                color: white;">
         <h1 style="margin: 0; font-size: 3rem; font-weight: 700;">🌺 Tourism Analytics Platform</h1>
         <p style="font-size: 1.3rem; margin: 1rem 0; opacity: 0.9;">
             Complete Business Intelligence Suite for Hawaiian Hotels & Tourism Businesses
@@ -257,17 +256,8 @@ if analysis_type == "Overview":
     </div>
     """, unsafe_allow_html=True)
     
-    # KPI Section with Background
-    st.markdown("""
-    <div style="background: #f8f9fa; 
-                padding: 1.5rem; 
-                border-radius: 10px; 
-                margin-bottom: 2rem;
-                border: 1px solid #e9ecef;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <h3 style="margin: 0 0 1rem 0; color: #495057;">📊 Key Performance Indicators</h3>
-    </div>
-    """, unsafe_allow_html=True)
+    # Quick Stats Overview
+    st.markdown("### 📊 Key Performance Indicators")
     
     # Key Metrics Row
     col1, col2, col3, col4, col5 = st.columns(5)
@@ -313,360 +303,286 @@ if analysis_type == "Overview":
         )
     
     # Hawaiian Hotel Use Cases Section
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); 
-                padding: 2rem; 
-                border-radius: 12px; 
-                margin: 2rem 0;
-                border: 1px solid #e1bee7;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);">
-        <h3 style="margin: 0 0 1.5rem 0; color: #4527a0; text-align: center;">🏨 How Hawaiian Hotels Use This Platform</h3>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown("### 🏨 How Hawaiian Hotels Use This Platform")
     
     col1, col2 = st.columns(2)
     
     with col1:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    margin-bottom: 1rem;
-                    border-left: 4px solid #ff6b35;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h4 style="margin: 0 0 1rem 0; color: #ff6b35;">🌺 Waikiki Resort Properties</h4>
-            <ul style="margin: 0; color: #666; line-height: 1.6;">
-                <li>Monitor guest sentiment across Japanese, Chinese, and English reviews</li>
-                <li>Optimize room rates during peak surf seasons and holidays</li>
-                <li>Track competitor pricing at nearby beachfront hotels</li>
-                <li>Forecast demand for luau bookings and cultural experiences</li>
-            </ul>
-        </div>
+        **🌺 Waikiki Resort Properties**
+        - Monitor guest sentiment across Japanese, Chinese, and English reviews
+        - Optimize room rates during peak surf seasons and holidays
+        - Track competitor pricing at nearby beachfront hotels
+        - Forecast demand for luau bookings and cultural experiences
         
-        <div style="background: white; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    margin-bottom: 1rem;
-                    border-left: 4px solid #4ecdc4;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h4 style="margin: 0 0 1rem 0; color: #4ecdc4;">🏝️ Luxury Maui Resorts</h4>
-            <ul style="margin: 0; color: #666; line-height: 1.6;">
-                <li>Analyze chat conversations for upselling spa and dining packages</li>
-                <li>Score leads based on interest in wedding venues and honeymoon suites</li>
-                <li>Weather-based pricing for oceanview rooms during whale season</li>
-                <li>Track satisfaction scores for snorkeling and sunset dinner excursions</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **🏝️ Luxury Maui Resorts** 
+        - Analyze chat conversations for upselling spa and dining packages
+        - Score leads based on interest in wedding venues and honeymoon suites
+        - Weather-based pricing for oceanview rooms during whale season
+        - Track satisfaction scores for snorkeling and sunset dinner excursions
+        """)
     
     with col2:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    margin-bottom: 1rem;
-                    border-left: 4px solid #ff9068;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h4 style="margin: 0 0 1rem 0; color: #ff9068;">🌋 Big Island Adventure Hotels</h4>
-            <ul style="margin: 0; color: #666; line-height: 1.6;">
-                <li>Correlate volcano activity alerts with booking cancellations</li>
-                <li>Optimize adventure tour packages based on guest demographics</li>
-                <li>Monitor helicopter tour and lava viewing demand patterns</li>
-                <li>Track guest journey from inquiry to volcano tour booking</li>
-            </ul>
-        </div>
+        **🌋 Big Island Adventure Hotels**
+        - Correlate volcano activity alerts with booking cancellations
+        - Optimize adventure tour packages based on guest demographics  
+        - Monitor helicopter tour and lava viewing demand patterns
+        - Track guest journey from inquiry to volcano tour booking
         
-        <div style="background: white; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    margin-bottom: 1rem;
-                    border-left: 4px solid #95e1d3;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h4 style="margin: 0 0 1rem 0; color: #2d8659;">🐠 Kauai Eco-Resorts</h4>
-            <ul style="margin: 0; color: #666; line-height: 1.6;">
-                <li>Analyze sustainability messaging impact on bookings</li>
-                <li>Forecast demand for hiking and snorkeling activities</li>
-                <li>Monitor weather patterns affecting Na Pali Coast tours</li>
-                <li>Track eco-conscious traveler sentiment and preferences</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **🐠 Kauai Eco-Resorts**
+        - Analyze sustainability messaging impact on bookings
+        - Forecast demand for hiking and snorkeling activities
+        - Monitor weather patterns affecting Na Pali Coast tours
+        - Track eco-conscious traveler sentiment and preferences
+        """)
     
-    # Complete Feature Overview Section
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%); 
-                padding: 2rem; 
-                border-radius: 12px; 
-                margin: 2rem 0;
-                border: 1px solid #ffccbc;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);">
-        <h3 style="margin: 0 0 1.5rem 0; color: #bf360c; text-align: center;">🚀 Complete Platform Capabilities</h3>
-    </div>
-    """, unsafe_allow_html=True)
+    # Complete Feature Overview
+    st.markdown("---")
+    st.markdown("### 🚀 Complete Platform Capabilities")
     
     # Core Analytics Features
-    st.markdown("""
-    <div style="background: #f8f9fa; 
-                padding: 1.5rem; 
-                border-radius: 10px; 
-                margin: 1rem 0;
-                border: 1px solid #e9ecef;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <h4 style="margin: 0 0 1rem 0; color: #495057;">🎯 Core Analytics & Intelligence</h4>
-    </div>
-    """, unsafe_allow_html=True)
-    
+    st.markdown("#### 🎯 Core Analytics & Intelligence")
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.2rem; 
-                    border-radius: 8px; 
-                    height: 180px;
-                    border-left: 4px solid #667eea;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h5 style="margin: 0 0 0.5rem 0; color: #667eea;">🔍 Prospect Discovery</h5>
-            <ul style="margin: 0; color: #666; font-size: 0.9rem; line-height: 1.5;">
-                <li>Automated lead identification</li>
-                <li>Cross-platform visitor tracking</li>
-                <li>Intent analysis and scoring</li>
-                <li>Conversion funnel optimization</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **🔍 Prospect Discovery**
+        - Automated lead identification
+        - Cross-platform visitor tracking
+        - Intent analysis and scoring
+        - Conversion funnel optimization
+        """)
     
     with col2:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.2rem; 
-                    border-radius: 8px; 
-                    height: 180px;
-                    border-left: 4px solid #764ba2;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h5 style="margin: 0 0 0.5rem 0; color: #764ba2;">🧠 AI Lead Scoring</h5>
-            <ul style="margin: 0; color: #666; font-size: 0.9rem; line-height: 1.5;">
-                <li>Machine learning algorithms</li>
-                <li>Behavioral pattern analysis</li>
-                <li>Predictive conversion scoring</li>
-                <li>Automated lead prioritization</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **🧠 AI Lead Scoring**
+        - Machine learning algorithms
+        - Behavioral pattern analysis  
+        - Predictive conversion scoring
+        - Automated lead prioritization
+        """)
     
     with col3:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.2rem; 
-                    border-radius: 8px; 
-                    height: 180px;
-                    border-left: 4px solid #28a745;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h5 style="margin: 0 0 0.5rem 0; color: #28a745;">📊 Data Collection</h5>
-            <ul style="margin: 0; color: #666; font-size: 0.9rem; line-height: 1.5;">
-                <li>Multi-source data integration</li>
-                <li>Real-time data processing</li>
-                <li>Automated data validation</li>
-                <li>Custom data pipelines</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **📊 Data Collection**
+        - Multi-source data integration
+        - Real-time data processing
+        - Automated data validation
+        - Custom data pipelines
+        """)
     
     with col4:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.2rem; 
-                    border-radius: 8px; 
-                    height: 180px;
-                    border-left: 4px solid #ffc107;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h5 style="margin: 0 0 0.5rem 0; color: #e6a700;">💬 Chat Analytics</h5>
-            <ul style="margin: 0; color: #666; font-size: 0.9rem; line-height: 1.5;">
-                <li>Conversation sentiment analysis</li>
-                <li>Response time optimization</li>
-                <li>Intent classification</li>
-                <li>Multi-language support</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **💬 Chat Analytics**
+        - Conversation sentiment analysis
+        - Response time optimization
+        - Intent classification
+        - Multi-language support
+        """)
     
     # Advanced Features
-    st.markdown("""
-    <div style="background: #f8f9fa; 
-                padding: 1.5rem; 
-                border-radius: 10px; 
-                margin: 2rem 0 1rem 0;
-                border: 1px solid #e9ecef;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <h4 style="margin: 0 0 1rem 0; color: #495057;">📈 Advanced Analytics & Forecasting</h4>
-    </div>
-    """, unsafe_allow_html=True)
-    
+    st.markdown("#### 📈 Advanced Analytics & Forecasting")
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.2rem; 
-                    border-radius: 8px; 
-                    height: 180px;
-                    border-left: 4px solid #17a2b8;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h5 style="margin: 0 0 0.5rem 0; color: #17a2b8;">💭 Sentiment Analysis</h5>
-            <ul style="margin: 0; color: #666; font-size: 0.9rem; line-height: 1.5;">
-                <li>Real-time review monitoring</li>
-                <li>Social media sentiment tracking</li>
-                <li>Emotion detection & analysis</li>
-                <li>Trend identification</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **💭 Sentiment Analysis**
+        - Real-time review monitoring
+        - Social media sentiment tracking
+        - Emotion detection & analysis
+        - Trend identification
+        """)
     
     with col2:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.2rem; 
-                    border-radius: 8px; 
-                    height: 180px;
-                    border-left: 4px solid #dc3545;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h5 style="margin: 0 0 0.5rem 0; color: #dc3545;">🎯 Lead Management</h5>
-            <ul style="margin: 0; color: #666; font-size: 0.9rem; line-height: 1.5;">
-                <li>CRM integration</li>
-                <li>Lead lifecycle tracking</li>
-                <li>Automated follow-up triggers</li>
-                <li>Conversion rate optimization</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **🎯 Lead Management**
+        - CRM integration
+        - Lead lifecycle tracking
+        - Automated follow-up triggers
+        - Conversion rate optimization
+        """)
     
     with col3:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.2rem; 
-                    border-radius: 8px; 
-                    height: 180px;
-                    border-left: 4px solid #6f42c1;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h5 style="margin: 0 0 0.5rem 0; color: #6f42c1;">💰 Revenue Analytics</h5>
-            <ul style="margin: 0; color: #666; font-size: 0.9rem; line-height: 1.5;">
-                <li>Revenue stream analysis</li>
-                <li>Channel performance tracking</li>
-                <li>ROI measurement</li>
-                <li>Profit margin optimization</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **💰 Revenue Analytics**
+        - Revenue stream analysis
+        - Channel performance tracking
+        - ROI measurement
+        - Profit margin optimization
+        """)
     
     with col4:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.2rem; 
-                    border-radius: 8px; 
-                    height: 180px;
-                    border-left: 4px solid #fd7e14;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h5 style="margin: 0 0 0.5rem 0; color: #fd7e14;">📊 Demand Forecasting</h5>
-            <ul style="margin: 0; color: #666; font-size: 0.9rem; line-height: 1.5;">
-                <li>Predictive booking models</li>
-                <li>Seasonal trend analysis</li>
-                <li>Capacity planning tools</li>
-                <li>Dynamic pricing optimization</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **📊 Demand Forecasting**
+        - Predictive booking models
+        - Seasonal trend analysis
+        - Capacity planning tools
+        - Dynamic pricing optimization
+        """)
     
-    # Platform Benefits Section
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f9ff 100%); 
-                padding: 2rem; 
-                border-radius: 12px; 
-                margin: 2rem 0;
-                border: 1px solid #c3e6cb;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);">
-        <h3 style="margin: 0 0 1.5rem 0; color: #155724; text-align: center;">🌺 Why Hawaiian Tourism Businesses Choose Our Platform</h3>
-    </div>
-    """, unsafe_allow_html=True)
+    # Operational Tools
+    st.markdown("#### 🛠️ Operational & Management Tools")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("""
+        **🤖 Chatbot Simulator**
+        - Conversation flow testing
+        - Response optimization
+        - Training data generation
+        - Performance benchmarking
+        """)
+    
+    with col2:
+        st.markdown("""
+        **🔌 API Integration**
+        - Third-party connections
+        - Real-time data sync
+        - Custom integrations
+        - Webhook automation
+        """)
+    
+    with col3:
+        st.markdown("""
+        **🏆 Competitive Analysis**
+        - Market positioning insights
+        - Competitor benchmarking
+        - Pricing comparison tools
+        - Market share tracking
+        """)
+    
+    with col4:
+        st.markdown("""
+        **📋 Export & Reports**
+        - Custom report generation
+        - Automated reporting
+        - Data visualization
+        - Executive dashboards
+        """)
+    
+    # Specialized Features
+    st.markdown("#### 🌟 Specialized Hawaii Tourism Features")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("""
+        **🚨 Smart Alerts**
+        - Weather-based notifications
+        - Booking threshold alerts
+        - Sentiment drop warnings
+        - Revenue target tracking
+        """)
+    
+    with col2:
+        st.markdown("""
+        **🌤️ Weather Impact**
+        - Weather-booking correlations
+        - Activity demand forecasting
+        - Seasonal pattern analysis
+        - Climate-based pricing
+        """)
+    
+    with col3:
+        st.markdown("""
+        **💲 Dynamic Pricing**
+        - Real-time rate optimization
+        - Demand-based pricing
+        - Competitor rate matching
+        - Revenue maximization
+        """)
+    
+    with col4:
+        st.markdown("""
+        **🗺️ Customer Journey**
+        - Touchpoint mapping
+        - Conversion path analysis
+        - Experience optimization
+        - Retention strategies
+        """)
+    
+    # Additional Advanced Features
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+        **📱 Marketing Attribution**
+        - Channel performance analysis
+        - Campaign ROI tracking
+        - Customer acquisition costs
+        - Attribution modeling
+        """)
+    
+    with col2:
+        st.markdown("""
+        **🎉 Event Impact**
+        - Local event correlations
+        - Festival demand spikes
+        - Cultural event planning
+        - Special occasion tracking
+        """)
+    
+    with col3:
+        st.markdown("""
+        **🏄 Activity Recommendations**
+        - Personalized suggestions
+        - Activity demand forecasting
+        - Experience optimization
+        - Guest satisfaction tracking
+        """)
+    
+    # Specific Hawaiian Business Benefits
+    st.markdown("---")
+    st.markdown("### 🌺 Why Hawaiian Tourism Businesses Choose Our Platform")
     
     col1, col2 = st.columns(2)
     
     with col1:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    margin-bottom: 1rem;
-                    border: 1px solid #e3f2fd;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h4 style="margin: 0 0 1rem 0; color: #1976d2;">🏝️ Local Market Expertise</h4>
-            <ul style="margin: 0; color: #666; line-height: 1.6;">
-                <li>Understanding of Hawaiian hospitality culture</li>
-                <li>Island-specific tourism patterns and seasonality</li>
-                <li>Integration with local tour operators and activities</li>
-                <li>Knowledge of international visitor preferences (Japan, Korea, China)</li>
-            </ul>
-        </div>
+        **🏝️ Local Market Expertise**
+        - Understanding of Hawaiian hospitality culture
+        - Island-specific tourism patterns and seasonality
+        - Integration with local tour operators and activities
+        - Knowledge of international visitor preferences (Japan, Korea, China)
         
-        <div style="background: white; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    margin-bottom: 1rem;
-                    border: 1px solid #e8f5e8;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h4 style="margin: 0 0 1rem 0; color: #388e3c;">🎯 Tourism Industry Focus</h4>
-            <ul style="margin: 0; color: #666; line-height: 1.6;">
-                <li>Hotel, resort, and vacation rental optimization</li>
-                <li>Activity and tour operator insights</li>
-                <li>Restaurant and dining experience analytics</li>
-                <li>Retail and souvenir shop performance tracking</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **🌊 Hawaii-Specific Analytics**
+        - Weather impact on outdoor activities and bookings
+        - Ocean condition effects on water sports demand
+        - Cultural event and festival impact analysis
+        - Inter-island travel pattern tracking
+        
+        **🎯 Tourism Industry Focus**
+        - Hotel, resort, and vacation rental optimization
+        - Activity and tour operator insights
+        - Restaurant and dining experience analytics
+        - Retail and souvenir shop performance tracking
+        """)
     
     with col2:
         st.markdown("""
-        <div style="background: white; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    margin-bottom: 1rem;
-                    border: 1px solid #fff3e0;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h4 style="margin: 0 0 1rem 0; color: #f57c00;">🚀 Advanced AI Technology</h4>
-            <ul style="margin: 0; color: #666; line-height: 1.6;">
-                <li>Machine learning models trained on Hawaiian tourism data</li>
-                <li>Multi-language support for international guests</li>
-                <li>Real-time sentiment analysis in 15+ languages</li>
-                <li>Predictive analytics for seasonal demand patterns</li>
-            </ul>
-        </div>
+        **🚀 Advanced AI Technology**
+        - Machine learning models trained on Hawaiian tourism data
+        - Multi-language support for international guests
+        - Real-time sentiment analysis in 15+ languages
+        - Predictive analytics for seasonal demand patterns
         
-        <div style="background: white; 
-                    padding: 1.5rem; 
-                    border-radius: 10px; 
-                    margin-bottom: 1rem;
-                    border: 1px solid #f3e5f5;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h4 style="margin: 0 0 1rem 0; color: #7b1fa2;">💡 Actionable Business Intelligence</h4>
-            <ul style="margin: 0; color: #666; line-height: 1.6;">
-                <li>Increase average daily rates by 15-25%</li>
-                <li>Improve occupancy rates through better forecasting</li>
-                <li>Reduce guest service response times by 40%</li>
-                <li>Optimize marketing spend with attribution tracking</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        **💡 Actionable Business Intelligence**
+        - Increase average daily rates by 15-25%
+        - Improve occupancy rates through better forecasting
+        - Reduce guest service response times by 40%
+        - Optimize marketing spend with attribution tracking
+        
+        **🔗 Seamless Integration**
+        - Connect with existing PMS and CRM systems
+        - API-first architecture for custom solutions
+        - Real-time data synchronization
+        - Cloud-based scalability for peak seasons
+        """)
     
     # Performance Visualizations
-    st.markdown("""
-    <div style="background: #f8f9fa; 
-                padding: 2rem; 
-                border-radius: 12px; 
-                margin: 2rem 0;
-                border: 1px solid #dee2e6;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);">
-        <h3 style="margin: 0 0 1.5rem 0; color: #495057; text-align: center;">📈 Current Performance Overview</h3>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown("### 📈 Current Performance Overview")
     
     # Charts Row
     col1, col2 = st.columns(2)
