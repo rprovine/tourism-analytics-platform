@@ -58,7 +58,7 @@ def create_pricing_data():
 
 # Page configuration
 st.set_page_config(
-    page_title="Tourism Analytics Platform - LeniLani Consulting",
+    page_title="Tourism Business Intelligence Platform",
     page_icon="🌺",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -178,8 +178,9 @@ if 'hotels_data' not in st.session_state:
     })
 
 # Header
-st.markdown('<h1 class="main-header">🌺 Tourism Analytics Platform</h1>', unsafe_allow_html=True)
-st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Powered by LeniLani Consulting - AI-Driven Insights for Hawaiian Hospitality</p>', unsafe_allow_html=True)
+st.markdown('<h1 class="main-header">🌺 Tourism Business Intelligence Platform</h1>', unsafe_allow_html=True)
+st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">AI-Powered Lead Generation & Analytics for Hawaiian Tourism Industry</p>', unsafe_allow_html=True)
+st.markdown('<p style="text-align: center; font-size: 1rem; color: #888;">Discover high-value prospects • Score leads with AI • Automate data collection from TripAdvisor, Google Places, Yelp & more</p>', unsafe_allow_html=True)
 
 # Sidebar
 with st.sidebar:
@@ -189,8 +190,8 @@ with st.sidebar:
                 border-radius: 10px; 
                 text-align: center; 
                 margin-bottom: 20px;">
-        <h2 style="color: white; margin: 0; font-size: 1.5rem;">🌺 LeniLani Consulting</h2>
-        <p style="color: rgba(255,255,255,0.9); margin: 5px 0 0 0; font-size: 0.9rem;">Tourism Analytics Platform</p>
+        <h2 style="color: white; margin: 0; font-size: 1.5rem;">🌺 Tourism BI System</h2>
+        <p style="color: rgba(255,255,255,0.9); margin: 5px 0 0 0; font-size: 0.9rem;">Lead Generation & Intelligence</p>
     </div>
     """, unsafe_allow_html=True)
     st.markdown("---")
@@ -215,7 +216,8 @@ with st.sidebar:
     st.markdown("### 📊 Analysis Type")
     analysis_type = st.radio(
         "Choose analysis focus",
-        ["Overview", "Chat Analytics", "Sentiment Analysis", "Lead Management", 
+        ["Overview", "Prospect Discovery", "AI Lead Scoring", "Data Collection",
+         "Chat Analytics", "Sentiment Analysis", "Lead Management", 
          "Revenue Analytics", "Demand Forecasting", "Chatbot Simulator", 
          "API Integration", "Competitive Analysis", "Export & Reports", 
          "Smart Alerts", "Weather Impact", "Dynamic Pricing", "Customer Journey",
@@ -596,6 +598,381 @@ elif analysis_type == "Demand Forecasting":
         fig_lead = px.pie(lead_time_data, values='Bookings', names='Days in Advance',
                          title="Booking Distribution by Lead Time")
         st.plotly_chart(fig_lead, use_container_width=True)
+
+elif analysis_type == "Prospect Discovery":
+    st.markdown("## 🔍 Tourism Business Prospect Discovery")
+    
+    # Discovery metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Total Prospects", "847", "+126 this week")
+    
+    with col2:
+        st.metric("High Priority", "142", "+18")
+    
+    with col3:
+        st.metric("Avg AI Score", "78.5", "+2.3")
+    
+    with col4:
+        st.metric("Data Sources", "12", "Active")
+    
+    # Prospect data
+    st.markdown("### 🎯 Top Tourism Business Prospects")
+    
+    prospects_data = pd.DataFrame({
+        'Business': ['Maui Ocean Center', 'Polynesian Cultural Center', 'Atlantis Submarines Hawaii',
+                    'Roberts Hawaii Tours', 'Hawaii Food Tours', 'Kualoa Ranch Tours',
+                    'Blue Hawaiian Helicopters', 'Diamond Head Crater', 'Surfing School Hawaii',
+                    'Paradise Cove Luau'],
+        'Type': ['Attraction', 'Cultural', 'Adventure', 'Transportation', 'Food & Dining',
+                'Adventure', 'Tours', 'Natural Site', 'Water Sports', 'Entertainment'],
+        'Island': ['Maui', 'Oahu', 'Oahu', 'Multi-Island', 'Oahu', 'Oahu',
+                  'Multi-Island', 'Oahu', 'Oahu', 'Oahu'],
+        'AI Score': [92, 89, 87, 85, 84, 83, 82, 81, 79, 78],
+        'Tech Readiness': ['High', 'Medium', 'High', 'High', 'Medium', 'Low',
+                          'High', 'Low', 'Medium', 'Medium'],
+        'Annual Visitors': ['450K', '1.2M', '280K', '890K', '125K', '750K',
+                           '320K', '2.1M', '95K', '180K'],
+        'Digital Presence': ['Strong', 'Strong', 'Moderate', 'Strong', 'Weak',
+                            'Moderate', 'Strong', 'Weak', 'Moderate', 'Strong'],
+        'Priority': ['🔥 Hot', '🔥 Hot', '🔥 Hot', '☀️ Warm', '☀️ Warm',
+                    '☀️ Warm', '☀️ Warm', '❄️ Cold', '❄️ Cold', '❄️ Cold']
+    })
+    
+    # Display prospects with enhanced formatting
+    st.dataframe(
+        prospects_data,
+        use_container_width=True,
+        height=400,
+        column_config={
+            "AI Score": st.column_config.ProgressColumn(
+                "AI Score",
+                help="AI-calculated lead score",
+                format="%d",
+                min_value=0,
+                max_value=100,
+            ),
+            "Annual Visitors": st.column_config.TextColumn(
+                "Annual Visitors",
+                help="Estimated annual visitor count"
+            ),
+            "Priority": st.column_config.TextColumn(
+                "Priority",
+                help="Lead priority status"
+            )
+        }
+    )
+    
+    # Filtering options
+    st.markdown("### 🔧 Discovery Filters")
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        business_type = st.multiselect(
+            "Business Type",
+            ['All', 'Hotels', 'Tours', 'Restaurants', 'Attractions', 'Transportation', 'Retail']
+        )
+    
+    with col2:
+        min_score = st.slider("Minimum AI Score", 0, 100, 70)
+    
+    with col3:
+        tech_readiness = st.selectbox(
+            "Technology Readiness",
+            ['All', 'High', 'Medium', 'Low']
+        )
+    
+    # Prospect insights
+    st.markdown("### 💡 AI-Generated Insights")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.info("""
+        **🌟 Top Opportunity: Maui Ocean Center**
+        
+        • High visitor volume with strong growth trajectory
+        • Currently using basic booking system
+        • Perfect candidate for AI-powered visitor experience platform
+        • Estimated revenue potential: $450K/year
+        • Decision maker: John Tanaka (General Manager)
+        """)
+    
+    with col2:
+        st.success("""
+        **📈 Market Trend Alert**
+        
+        • Adventure tourism segment growing 18% YoY
+        • 73% of prospects lack modern booking systems
+        • Mobile booking demand increased 45% 
+        • AI chatbot adoption only at 12%
+        • Huge opportunity for automation services
+        """)
+
+elif analysis_type == "AI Lead Scoring":
+    st.markdown("## 🤖 AI-Powered Lead Scoring System")
+    
+    # Scoring metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Leads Scored Today", "47", "+12")
+    
+    with col2:
+        st.metric("Model Accuracy", "94.2%", "+1.3%")
+    
+    with col3:
+        st.metric("Avg Processing Time", "1.3s", "-0.2s")
+    
+    with col4:
+        st.metric("Conversion Rate", "31%", "+5%")
+    
+    # Scoring factors
+    st.markdown("### 📊 AI Scoring Factors & Weights")
+    
+    scoring_factors = pd.DataFrame({
+        'Factor': ['Digital Presence', 'Annual Revenue', 'Growth Rate', 'Tech Stack',
+                  'Customer Reviews', 'Market Position', 'Engagement History', 
+                  'Industry Trends', 'Competitive Pressure', 'Budget Indicators'],
+        'Weight': [15, 20, 18, 12, 10, 8, 7, 5, 3, 2],
+        'Current Importance': ['High', 'High', 'High', 'Medium', 'Medium',
+                              'Medium', 'Low', 'Low', 'Low', 'Low']
+    })
+    
+    # Create a horizontal bar chart for scoring factors
+    fig_factors = px.bar(scoring_factors, x='Weight', y='Factor', orientation='h',
+                        color='Weight', color_continuous_scale='Viridis',
+                        title="AI Lead Scoring Factor Weights")
+    st.plotly_chart(fig_factors, use_container_width=True)
+    
+    # Live scoring demo
+    st.markdown("### 🎯 Live Lead Scoring Demo")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("**Enter Business Information**")
+        business_name = st.text_input("Business Name", "Sample Hawaii Tours")
+        business_type = st.selectbox("Business Type", 
+                                    ['Tour Operator', 'Hotel', 'Restaurant', 'Attraction', 'Retail'])
+        annual_revenue = st.slider("Annual Revenue (Estimate)", 100000, 10000000, 1000000, 50000)
+        digital_presence = st.select_slider("Digital Presence", 
+                                          ['None', 'Basic', 'Moderate', 'Strong', 'Excellent'])
+        customer_reviews = st.number_input("Average Review Score", 1.0, 5.0, 4.5, 0.1)
+        
+        if st.button("🤖 Calculate AI Score", type="primary"):
+            # Simulate AI scoring
+            base_score = 50
+            if digital_presence == 'Excellent':
+                base_score += 20
+            elif digital_presence == 'Strong':
+                base_score += 15
+            elif digital_presence == 'Moderate':
+                base_score += 10
+            elif digital_presence == 'Basic':
+                base_score += 5
+            
+            revenue_score = min(20, annual_revenue / 500000 * 10)
+            review_score = customer_reviews * 2
+            
+            final_score = min(100, base_score + revenue_score + review_score + np.random.randint(-5, 10))
+            
+            st.success(f"**AI Score: {final_score:.1f}/100**")
+            
+            if final_score >= 80:
+                st.balloons()
+                priority = "🔥 HOT LEAD - Immediate Action Required"
+            elif final_score >= 60:
+                priority = "☀️ WARM LEAD - Schedule Follow-up"
+            else:
+                priority = "❄️ COLD LEAD - Nurture Campaign"
+            
+            st.info(f"**Priority: {priority}**")
+    
+    with col2:
+        st.markdown("**AI Analysis & Recommendations**")
+        st.markdown("""
+        📊 **Scoring Breakdown:**
+        • Digital Presence: 15/20 points
+        • Revenue Potential: 18/20 points
+        • Market Position: 12/15 points
+        • Growth Indicators: 14/18 points
+        • Tech Readiness: 8/12 points
+        
+        🎯 **Recommended Actions:**
+        1. Schedule demo within 48 hours
+        2. Prepare custom ROI analysis
+        3. Highlight competitor success stories
+        4. Focus on mobile booking solutions
+        5. Offer limited-time onboarding discount
+        
+        💡 **Key Selling Points:**
+        • 3x ROI within 6 months
+        • Quick implementation (2 weeks)
+        • No upfront costs option available
+        """)
+    
+    # Historical scoring performance
+    st.markdown("### 📈 Lead Scoring Performance")
+    
+    dates = pd.date_range(start='2024-01-01', periods=90, freq='D')
+    scoring_performance = pd.DataFrame({
+        'Date': dates,
+        'Leads Scored': np.random.poisson(45, 90),
+        'High Score (80+)': np.random.poisson(8, 90),
+        'Converted': np.random.poisson(5, 90)
+    })
+    
+    fig_performance = px.line(scoring_performance, x='Date', 
+                             y=['Leads Scored', 'High Score (80+)', 'Converted'],
+                             title="Lead Scoring & Conversion Trends")
+    st.plotly_chart(fig_performance, use_container_width=True)
+
+elif analysis_type == "Data Collection":
+    st.markdown("## 🌐 Tourism Data Collection Sources")
+    
+    # Data source status
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Active Sources", "12", "✅ All Online")
+    
+    with col2:
+        st.metric("Data Points Today", "15,847", "+2,341")
+    
+    with col3:
+        st.metric("Last Update", "2 min ago", "🔄 Live")
+    
+    with col4:
+        st.metric("Data Quality", "98.5%", "+0.3%")
+    
+    # Data sources grid
+    st.markdown("### 📡 Active Data Collection Sources")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("**🗺️ Google Places**")
+        st.success("✅ Active")
+        st.caption("2,341 businesses tracked")
+        if st.button("Sync Now", key="google"):
+            st.info("Syncing Google Places...")
+    
+    with col2:
+        st.markdown("**⭐ TripAdvisor**")
+        st.success("✅ Active")
+        st.caption("1,892 listings monitored")
+        if st.button("Sync Now", key="tripadvisor"):
+            st.info("Syncing TripAdvisor...")
+    
+    with col3:
+        st.markdown("**📱 Yelp Business**")
+        st.success("✅ Active")
+        st.caption("1,456 reviews analyzed")
+        if st.button("Sync Now", key="yelp"):
+            st.info("Syncing Yelp...")
+    
+    with col4:
+        st.markdown("**🏨 Booking.com**")
+        st.success("✅ Active")
+        st.caption("892 hotels tracked")
+        if st.button("Sync Now", key="booking"):
+            st.info("Syncing Booking.com...")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("**✈️ Flight Search Trends**")
+        st.success("✅ Active")
+        st.caption("Live demand data")
+        if st.button("Sync Now", key="flights"):
+            st.info("Syncing flight data...")
+    
+    with col2:
+        st.markdown("**🏝️ Hawaii Tourism Authority**")
+        st.success("✅ Active")
+        st.caption("Official statistics")
+        if st.button("Sync Now", key="hta"):
+            st.info("Syncing HTA data...")
+    
+    with col3:
+        st.markdown("**📰 Pacific Business News**")
+        st.success("✅ Active")
+        st.caption("Industry news & trends")
+        if st.button("Sync Now", key="pbn"):
+            st.info("Syncing PBN...")
+    
+    with col4:
+        st.markdown("**💼 LinkedIn Business**")
+        st.warning("⚠️ Limited")
+        st.caption("Key decision makers")
+        if st.button("Sync Now", key="linkedin"):
+            st.info("Syncing LinkedIn...")
+    
+    # Custom webscrape section
+    st.markdown("### 🕷️ Custom Web Scraping")
+    
+    col1, col2 = st.columns([3, 1])
+    
+    with col1:
+        custom_url = st.text_input("Enter website URL to scrape", 
+                                  placeholder="https://example-tourism-site.com")
+    
+    with col2:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("🔍 Start Scraping", type="primary", use_container_width=True):
+            if custom_url:
+                with st.spinner("Scraping website..."):
+                    progress_bar = st.progress(0)
+                    for i in range(100):
+                        progress_bar.progress(i + 1)
+                    st.success(f"✅ Successfully scraped {custom_url}")
+                    st.info("Found: 23 contact details, 15 service offerings, 8 pricing points")
+    
+    # Data collection schedule
+    st.markdown("### ⏰ Collection Schedule & Automation")
+    
+    schedule_data = pd.DataFrame({
+        'Source': ['Google Places', 'TripAdvisor', 'Yelp', 'Booking.com', 
+                  'Flight Trends', 'HTA Stats', 'News Sources'],
+        'Frequency': ['Every 6 hours', 'Daily', 'Every 12 hours', 'Daily',
+                     'Real-time', 'Weekly', 'Every 4 hours'],
+        'Next Run': ['2:00 PM', '6:00 PM', '8:00 PM', '11:00 PM',
+                    'Continuous', 'Monday 9 AM', '4:00 PM'],
+        'Last Success': ['11:47 AM', '11:00 AM', '8:00 AM', '11:00 PM Yesterday',
+                       'Now', 'Last Monday', '12:00 PM'],
+        'Records': [2341, 1892, 1456, 892, 'Live', 145, 327]
+    })
+    
+    st.dataframe(schedule_data, use_container_width=True)
+    
+    # Data quality metrics
+    st.markdown("### 📊 Data Quality & Coverage")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        coverage_data = pd.DataFrame({
+            'Island': ['Oahu', 'Maui', 'Big Island', 'Kauai', 'Molokai', 'Lanai'],
+            'Coverage': [95, 88, 82, 79, 45, 38]
+        })
+        
+        fig_coverage = px.bar(coverage_data, x='Island', y='Coverage',
+                             color='Coverage', color_continuous_scale='Viridis',
+                             title="Data Coverage by Island (%)")
+        st.plotly_chart(fig_coverage, use_container_width=True)
+    
+    with col2:
+        quality_metrics = pd.DataFrame({
+            'Metric': ['Completeness', 'Accuracy', 'Timeliness', 'Consistency', 'Validity'],
+            'Score': [96, 98, 94, 97, 99]
+        })
+        
+        fig_quality = px.line_polar(quality_metrics, r='Score', theta='Metric',
+                                   line_close=True, title="Data Quality Metrics")
+        fig_quality.update_traces(fill='toself')
+        st.plotly_chart(fig_quality, use_container_width=True)
 
 elif analysis_type == "Chat Analytics":
     st.markdown("## 💬 Chat Analytics Dashboard")
